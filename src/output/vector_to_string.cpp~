@@ -1,0 +1,257 @@
+// std_bhm/src/output/vector_to_string.cpp
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+
+/* Include standard libraries */
+#include <vector>
+#include <string>
+#include <complex>
+
+/* Include standard libraries */
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+#include "output/vector_to_string.h"
+
+
+
+// Convert 1D vector into a string suitable for easy output. Valid types
+// for this template function should be any fundamental numerical types
+namespace NSA1 = std_bhm::output::vector_to_string_detail;
+
+template <class T>
+using vector_1d = std::vector<T>;
+
+template <class T>
+std::string NSA1::vector_1d_to_string(vector_1d<T> vec)
+{
+    using vector = vector_1d<T>;
+    std::string str = "(";
+    for(vector::size_type i=0; i<vec.size()-1; ++i)
+	str += std::to_string(vec[i]) + ", ";
+    str += std::to_string( vec.back() ) + ")";
+
+    return str;
+/*
+    std::string str = "(";
+    for(const auto& i : array)
+	str += std::to_string(i) + ", ";
+    str = str.substr(0, str.size() - 2);
+    str += ")";
+
+    return str;
+*/
+/*
+    std::string str = "(";
+    int n_elements = array.size();
+    for(int i=0; i<n_elements; i++)
+    {
+	T element = array[i];
+	str += std::to_string(element) + ", ";
+    } // end of 'i' for-loop
+    str = str.substr(0, str.size() - 2);
+    str += ")";
+    
+    return str;
+*/
+}
+
+
+
+// Convert 1D vector into a string suitable for easy output. Valid types
+// for this template function should be any std::complex<T> types
+namespace NSA1 = std_bhm::output::vector_to_string_detail;
+
+template <class T>
+using cmplx_vector_1d = vector_1d< std::complex<T> >;
+
+template <class T>
+std::string NSA1::vector_1d_to_string(cmplx_vector_1d<T> vec)
+{
+
+    std::string string = "(";
+    int n_elements = vec.size();
+    for(int i=0; i<n_elements; i++)
+    {
+	std::complex<T> element = vec[i];
+	T real_part = std::real(element);
+	T imag_part = std::imag(element);
+	string += 
+	    std::to_string(real_part) + "+" + std::to_string(imag_part) + "i, ";
+    } // end of 'i' for-loop
+    string = string.substr(0, string.size() - 2);
+    string += ")";
+    
+    return string;
+
+}
+
+
+
+// Convert 2D vector into a string suitable for easy output. Valid types
+// for this template function should be any fundamental numerical types.
+namespace NSA1 = std_bhm::output::vector_to_string_detail;
+
+template <class T>
+using vector_2d = vector_1d< vector_1d<T> >;
+
+template <class T>
+std::string NSA1::vector_2d_to_string(vector_2d<T> array)
+{
+
+    std::string string = "(";
+    int n_rows = array.size();
+    int n_cols = (n_rows != 0) ? array[0].size() : 0;
+    for(int i=0; i<n_rows; i++)
+    {
+	string += "(";
+	for(int j=0; j<n_cols; j++)
+	{
+	    T element = array[i][j];
+	    string += std::to_string(element) + ", ";
+	} // end of 'j' for-loop
+	string = string.substr(0, string.size() - 2);
+	string += ")\n ";
+    } // end of 'i' for-loop
+    string = string.substr(0, string.size() - 2);
+    string += ")";
+    
+    return string;
+
+}
+
+
+
+// Convert 2D vector into a string suitable for easy output. Valid types
+// for this template function should be any std::complex<T> types
+namespace NSA1 = std_bhm::output::vector_to_string_detail;
+
+template <class T>
+using cmplx_vector_2d = vector_1d< cmplx_vector_1d<T> >;
+
+template <class T>
+std::string NSA1::vector_2d_to_string(cmplx_vector_2d<T> array)
+{
+
+    std::string string = "(";
+    int n_rows = array.size();
+    int n_cols = (n_rows != 0) ? array[0].size() : 0;
+    for(int i=0; i<n_rows; i++)
+    {
+	string += "(";
+	for(int j=0; j<n_cols; j++)
+	{
+	    std::complex<T> element = array[i][j];
+	    T real_part = std::real(element);
+	    T imag_part = std::imag(element);
+	    string += 
+		std::to_string(real_part) + "+" 
+		+ std::to_string(imag_part) + "i, ";
+	} // end of 'j' for-loop
+	string = string.substr(0, string.size() - 2);
+	string += ")\n ";
+    } // end of 'i' for-loop
+    string = string.substr(0, string.size() - 2);
+    string += ")";
+    
+    return string;
+
+}
+
+
+
+// Explicit instantiations of the free public functions
+
+// --- Explicit instantions of vector_1d_to_string(...) ---
+namespace NSA1 = std_bhm::output::vector_to_string_detail;
+
+template <class T>
+using vector_1d = std::vector<T>;
+template <class T>
+using vector_2d = vector_1d< vector_1d<T> >;
+template <class T>
+using cmplx_vector_1d = vector_1d< std::complex<T> >;
+template <class T>
+using cmplx_vector_2d = vector_1d< cmplx_vector_1d<T> >;
+
+template std::string NSA1::vector_1d_to_string(vector_1d<int> vec);
+template std::string NSA1::vector_1d_to_string(vector_1d<double> vec);
+template std::string NSA1::vector_1d_to_string(cmplx_vector_1d<int> vec);
+template std::string NSA1::vector_1d_to_string(cmplx_vector_1d<double> vec);
+/*
+namespace std_bhm
+{
+namespace output
+{
+namespace vector_to_string_detail
+{
+
+template <class T>
+using vector_1d = std::vector<T>;
+template <class T>
+using vector_2d = vector_1d< vector_1d<T> >;
+template <class T>
+using cmplx_vector_1d = vector_1d< std::complex<T> >;
+template <class T>
+using cmplx_vector_2d = vector_1d< cmplx_vector_1d<T> >;
+
+template std::string 
+vector_1d_to_string(vector_1d<int> array);
+
+template std::string 
+vector_1d_to_string(vector_1d<double> array);
+
+template std::string 
+vector_1d_to_string(cmplx_vector_1d<int> array);
+
+template std::string 
+vector_1d_to_string(cmplx_vector_1d<double> array);
+
+} // end of vector_to_string_detail namespace
+} // end of output namespace
+} // end of std_bhm namespace
+*/
+// --- Explicit instantions of vector_2d_to_string(...) ---
+namespace NSA1 = std_bhm::output::vector_to_string_detail;
+
+template <class T>
+using vector_1d = std::vector<T>;
+template <class T>
+using vector_2d = vector_1d< vector_1d<T> >;
+template <class T>
+using cmplx_vector_1d = vector_1d< std::complex<T> >;
+template <class T>
+using cmplx_vector_2d = vector_1d< cmplx_vector_1d<T> >;
+
+template std::string NSA1::vector_2d_to_string(vector_2d<int> array);
+template std::string NSA1::vector_2d_to_string(vector_2d<double> array);
+template std::string NSA1::vector_2d_to_string(cmplx_vector_2d<int> array);
+template std::string NSA1::vector_2d_to_string(cmplx_vector_2d<double> array);
+/*
+namespace std_bhm
+{
+namespace output
+{
+namespace vector_to_string_detail
+{
+
+template <class T>
+using cmplx_vector_1d = vector_1d< std::complex<T> >;
+template <class T>
+using cmplx_vector_2d = vector_1d< cmplx_vector_1d<T> >;
+
+template std::string vector_2d_to_string(vector_2d<int> array);
+template std::string vector_2d_to_string(vector_2d<double> array);
+template std::string vector_2d_to_string(cmplx_vector_2d<int> array);
+template std::string vector_2d_to_string(cmplx_vector_2d<double> array);
+
+} // end of vector_to_string_detail namespace
+} // end of output namespace
+} // end of std_bhm namespace
+*/

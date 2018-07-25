@@ -1,0 +1,28 @@
+// std_bhm/include/str_ops/replace.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_STRING_REPLACE_H
+#define STD_BHM_STRING_REPLACE_H
+
+/* Include standard libraries */
+#include <string>
+
+/* Include user-defined header files */
+
+namespace std_bhm
+{
+namespace string
+{
+
+bool replace(std::string &str, const std::string &from, const std::string &to);
+
+} // end of string namespace
+} // end of std_bhm namespace
+
+
+#endif

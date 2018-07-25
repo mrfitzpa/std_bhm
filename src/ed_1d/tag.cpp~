@@ -1,0 +1,64 @@
+// std_bhm/src/ed_1d/tag.cpp
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+/* Include standard libraries */
+#include <vector>
+#include <cmath>
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+#include "ed_1d/tag.h"
+
+
+
+// Generate a tag for a given vector.
+namespace NSA1 = std_bhm::ed_1d;
+namespace NSA2 = NSA1::tag_detail;
+
+using int_vec = std::vector<int>;
+
+double NSA2::gen_tag(const int_vec& vec)
+{
+    auto tag = 0.0;
+
+    const auto M = vec.size();
+
+    for(auto i=decltype(M){0}; i<M; i++)
+    {
+	const auto p_i = 100.0 * (i + 1) + 3.0;
+	tag += sqrt(p_i) * vec[i];
+    }
+
+    return tag;
+}
+
+
+
+// Generate a tag array given a set of vectors.
+namespace NSA1 = std_bhm::ed_1d;
+namespace NSA2 = NSA1::tag_detail;
+
+using dbl_vec = std::vector<double>;
+using int_vec = std::vector<int>;
+using int_vec_2d = std::vector<int_vec>;
+
+dbl_vec NSA2::gen_tag_array(const int_vec_2d& vec_set)
+{
+    const auto size = vec_set.size();
+    auto tag_array = dbl_vec(size);
+
+    for(auto v=decltype(size){0}; v<size; v++)
+    {
+	const auto vec = vec_set[v];
+	const auto tag = ::NSA1::gen_tag(vec);
+	tag_array[v] = tag;
+    }
+
+    return tag_array;
+}

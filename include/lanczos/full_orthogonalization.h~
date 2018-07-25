@@ -1,0 +1,55 @@
+// /std_bhm/include/lanczos/full_orthogonalization.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_LANCZOS_FULL_ORTHOGONALIZATION_H
+#define STD_BHM_LANCZOS_FULL_ORTHOGONALIZATION_H
+
+/* Include standard libraries */
+
+/* Non-standard third-party libraries */
+#include <armadillo>
+
+/* Include user-defined header files */
+
+
+
+namespace std_bhm
+{
+namespace lanczos
+{
+
+
+
+class full_orthogonalization_params; // forward declaration
+
+
+
+namespace full_orthogonalization_detail
+{
+
+namespace NSA1 = std_bhm::lanczos;
+
+void full_orthogonalization(const arma::sp_mat& A, arma::sp_mat& T,
+		 arma::sp_mat& K, const arma::dvec& k_0,
+		 const NSA1::full_orthogonalization_params& la_params);
+
+} // end of full_orthogonalization_detail namespace
+
+
+
+// lift relevant classes and functions up one namespace
+using std_bhm::lanczos::full_orthogonalization_detail::full_orthogonalization;
+
+
+
+} // end of lanczos namespace
+} // end of std_bhm namespace
+
+
+#endif
+ 

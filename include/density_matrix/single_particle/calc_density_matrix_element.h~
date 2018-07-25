@@ -1,0 +1,45 @@
+// std_bhm/include/density_matrix/single_particle/calc_density_matrix_element.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_DENSITY_MATRIX_SINGLE_PARTICLE_CALC_DENSITY_MATRIX_ELEMENT_H
+#define STD_BHM_DENSITY_MATRIX_SINGLE_PARTICLE_CALC_DENSITY_MATRIX_ELEMENT_H
+
+/* Include standard libraries */
+#include <vector>
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+
+
+namespace std_bhm
+{
+namespace n_k
+{
+namespace calc_density_matrix_element_detail
+{
+
+using dbl_vec = std::vector<double>;
+using dbl_vec_2d = std::vector<dbl_vec>;
+
+dbl_vec_2d calc_density_matrix_element(const std::string& abs_sys_data_set_dir_name);
+
+} // end of calc_density_matrix_element_detail namespace
+
+
+
+// lift relevant classes and functions up one namespace
+using std_bhm::n_k::calc_density_matrix_element_detail::calc_density_matrix_element;
+
+
+
+} // end of n_k namespace
+} // end of std_bhm namespace
+
+
+#endif

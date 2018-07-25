@@ -1,0 +1,236 @@
+// /std_bhm/src/ed_1d/bhm_params.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+
+/* Include standard libraries */
+#include <memory>
+#include <vector>
+
+/* Non-standard third-party libraries */
+#include "third_party/spimpl.h"
+#include <boost/math/special_functions/binomial.hpp>
+
+/* Include user-defined header files */
+#include "ed_1d/bhm_params.h"
+#include "ed_1d/bhm_params_params.h"
+
+
+
+// Partial definition of impl class.
+namespace NSA1 = std_bhm::ed_1d;
+
+using int_vec = std::vector<int>;
+using int_vec_2d = std::vector<int_vec>;
+
+struct NSA1::bhm_params::impl
+{
+    impl(const ::NSA1::bhm_params_params& fb_params);
+
+    const int_vec_2d fock_states;
+    
+    const int hilbert_space_dimension;
+    const int N;
+    const int M;
+};
+
+
+
+// The 'unnamed' namespace is introduced to make it clear to the reader
+// of this code which functions belong to this translation unit's true 
+// unnamed namespace.
+namespace NSA1 = std_bhm::ed_1d;
+
+using int_vec = std::vector<int>;
+using int_vec_2d = std::vector<int_vec>;
+
+namespace unnamed
+{
+namespace
+{
+
+int_vec_2d calc_fock_states(const ::NSA1::bhm_params_params& fb_params);
+int_vec calc_next_vec(int N, int M, int_vec previous_vec);
+int calc_k(int M, int_vec previous_vec);
+
+} // end of true unnamed namespace
+} // end of 'phony' unnamed namespace
+
+
+
+// bhm_params constructor.
+namespace NSA1 = std_bhm::ed_1d;
+
+NSA1::bhm_params::bhm_params(const ::NSA1::bhm_params_params& fb_params)
+    : pimpl{ spimpl::make_impl<impl>(fb_params) }
+{}
+
+
+
+// bhm_params::impl constructor.
+namespace NSA1 = std_bhm::ed_1d;
+
+NSA1::bhm_params::impl::impl(const ::NSA1::bhm_params_params& fb_params)
+    : fock_states{ ::unnamed::calc_fock_states(fb_params) },
+      hilbert_space_dimension( fock_states.size() ),
+      N{ fb_params.get_total_number_of_particles() },
+      M{ fb_params.get_number_of_lattice_sites() }
+{}
+
+
+
+// Calculate the fock states.
+namespace NSA1 = std_bhm::ed_1d;
+
+using int_vec = std::vector<int>;
+using int_vec_2d = std::vector<int_vec>;
+const auto binom = boost::math::binomial_coefficient<double>;
+
+namespace unnamed
+{
+namespace
+{
+
+int_vec_2d calc_fock_states(const ::NSA1::bhm_params_params& fb_params)
+{
+    auto basis_vecs = int_vec_2d();
+
+    const auto N = fb_params.get_total_number_of_particles();
+    const auto M = fb_params.get_number_of_lattice_sites();
+    
+    auto first_vec = int_vec(M, 0);
+    first_vec[0] = N;
+    basis_vecs.push_back(first_vec);
+
+    // D is the hilbert space dimension
+    const auto D = int( round( binom(N + M - 1, N) ) );
+
+    for(auto v=decltype(D){1}; v<D; v++)
+    {
+	const auto previous_vec = basis_vecs[v-1];
+	const auto next_vec = ::unnamed::calc_next_vec(N, M, previous_vec);
+	
+	basis_vecs.push_back(next_vec);
+    }
+
+    return basis_vecs;
+}
+
+} // end of true unnamed namespace
+} // end of 'phony' unnamed namespace
+
+
+
+// Calculate the next fock state.
+using int_vec = std::vector<int>;
+
+namespace unnamed
+{
+namespace
+{
+
+int_vec calc_next_vec(int N, int M, int_vec previous_vec)
+{
+
+    const auto k = ::unnamed::calc_k(M, previous_vec);
+    
+    auto next_vec = int_vec(M);
+    auto sum = 0;
+	
+    if (1 <= k)
+    {
+	for(auto i=decltype(k-1){0}; i<=k-1; i++)
+	{
+	    const auto n_i = previous_vec[i];
+	    next_vec[i] = n_i;
+	    sum += n_i;
+	}
+    }
+
+    next_vec[k] = previous_vec[k] - 1;
+    next_vec[k+1] = N - sum - next_vec[k];
+
+    if (k + 2 < M)
+    {
+	for(auto i=decltype(M){k+2}; i<M; i++)
+	{
+	    next_vec[i] = 0;
+	}
+    }
+
+    return next_vec;
+}
+
+} // end of true unnamed namespace
+} // end of 'phony' unnamed namespace
+
+
+
+// Calculate the k-index used in the algorithm to construct the fock basis.
+using int_vec = std::vector<int>;
+
+namespace unnamed
+{
+namespace
+{
+
+int calc_k(int M, int_vec previous_vec)
+{
+
+    auto k = 0;
+
+    for(auto i=decltype(M-1){0}; i<M-1; i++)
+    {
+	const auto n_k = previous_vec[i];
+	if (n_k != 0) { k = i; }
+    }
+
+    return k;
+}
+
+} // end of true unnamed namespace
+} // end of 'phony' unnamed namespace
+
+
+
+// Get Hilbert space dimension.
+namespace NSA1 = std_bhm::ed_1d;
+
+int NSA1::bhm_params::get_hilbert_space_dimension() const
+{
+    return pimpl->hilbert_space_dimension;
+}
+
+
+
+// Get total number of particles 'N'.
+namespace NSA1 = std_bhm::ed_1d;
+
+int NSA1::bhm_params::get_total_number_of_particles() const
+{
+    return pimpl->N;
+}
+
+
+
+// Get number of lattice sites 'M'.
+namespace NSA1 = std_bhm::ed_1d;
+
+int NSA1::bhm_params::get_number_of_lattice_sites() const
+{
+    return pimpl->M;
+}
+
+
+
+// Get the ith fock state.
+namespace NSA1 = std_bhm::ed_1d;
+
+int_vec NSA1::bhm_params::get_fock_state(int i) const
+{
+    return pimpl->fock_states[i];
+}

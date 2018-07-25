@@ -1,0 +1,38 @@
+// std_bhm/include/atomic_lim/equilibrium/zero_temperature/static_lim.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_ATOMIC_LIM_EQUILIBRIUM_ZERO_TEMPERATURE_STATIC_LIM_H
+#define STD_BHM_ATOMIC_LIM_EQUILIBRIUM_ZERO_TEMPERATURE_STATIC_LIM_H
+
+/* Include standard libraries */
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+
+
+
+namespace std_bhm
+{
+namespace atomic_lim
+{
+namespace equilibrium
+{
+namespace zero_temperature
+{
+
+double G0_R12_w0(double mu);
+double u1(double mu);
+
+} // end of zero_temperature namespace
+} // end of equilibrium namespace
+} // end of atomic_lim namespace
+} // end of std_bhm namespace
+
+
+#endif

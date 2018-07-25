@@ -1,0 +1,43 @@
+// std_bhm/include/bhm_2hs_2pi/konstantinov_and_perel/zero_temperature/u1.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_BHM_2HS_2PI_KONTANTINOV_AND_PEREL_ZERO_TEMPERATURE_U1_H
+#define STD_BHM_BHM_2HS_2PI_KONTANTINOV_AND_PEREL_ZERO_TEMPERATURE_U1_H
+
+/* Include standard libraries */
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+
+
+
+namespace std_bhm
+{
+namespace atomic_lim
+{
+namespace equilibrium
+{
+namespace zero_temperature
+{
+namespace static_lim
+{
+namespace local
+{
+
+double retarded_propagator(double mu);
+
+} // end of local namespace
+} // end of static_lim namespace
+} // end of zero_temperature namespace
+} // end of equilibrium namespace
+} // end of atomic_lim namespace
+} // end of std_bhm namespace
+
+
+#endif

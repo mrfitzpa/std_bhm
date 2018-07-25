@@ -1,0 +1,41 @@
+// std_bhm/include/atomic_lim/local/params.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_ATOMIC_LIM_LOCAL_PARAMS_H
+#define STD_BHM_ATOMIC_LIM_LOCAL_PARAMS_H
+
+/* Include standard libraries */
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+
+
+
+namespace std_bhm
+{
+namespace atomic_lim
+{
+namespace local
+{
+
+struct params
+{
+    params(double beta, double mu);
+
+    const double beta; // inverse temperature; in units of 1/U
+    const double mu; // chemical potential; in units of U
+};
+
+} // end of local namespace
+} // end of atomic_lim namespace
+} // end of std_bhm namespace
+
+
+#endif
+ 

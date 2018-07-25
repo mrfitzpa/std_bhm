@@ -1,0 +1,48 @@
+// std_bhm/include/k_map/calc_n_duplicates.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_KMAP_CALC_N_DUPLICATES_H
+#define STD_BHM_KMAP_CALC_N_DUPLICATES_H
+
+/* Include standard libraries */
+#include <vector>
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+#include "hopping/spatial_params.h"
+
+
+
+namespace std_bhm
+{
+namespace kmap
+{
+namespace calc_n_duplicates_detail
+{
+
+namespace NSA1 = std_bhm::hopping;
+
+using vector_2d = std::vector< std::vector<double> >;
+
+vector_2d calc_n_duplicates(const NSA1::spatial_params& sp_params);
+
+} // end of calc_n_duplicates_detail namespace
+
+
+
+// lift relevant classes and functions up one namespace
+using std_bhm::kmap::calc_n_duplicates_detail::calc_n_duplicates;
+
+
+
+} // end of kmap namespace
+} // end of std_bhm namespace
+
+
+#endif

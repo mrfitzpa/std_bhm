@@ -1,0 +1,91 @@
+// /std_bhm/test/lanczos/full_orthogonalization.cpp
+
+// -----------------------------------------------------------------------
+
+// This program serves as a unit test of the classes defined in the 
+// .cpp file 'std_bhm/test/lanczos/full_orthogonalization.cpp'.
+
+// -----------------------------------------------------------------------
+
+
+/* Include standard libraries */
+#include <limits>
+#include <cmath>
+#include <iostream>
+
+/* Non-standard third-party libraries */
+#include <armadillo>
+
+/* Include user-defined header files */
+#include "lanczos/full_orthogonalization.h"
+#include "lanczos/quench_0T/tuned_hopping/main_alg_params.h"
+#include "lanczos/local_params.h"
+#include "lanczos/fock_basis_params.h"
+#include "lanczos/step_params.h"
+#include "lanczos/full_orthogonalization_params.h"
+#include "lanczos/quench_0T/fock_basis.h"
+#include "lanczos/quench_0T/tuned_hopping/Ohm_1.h"
+#include "hopping/quench/linear/amplitude.h"
+#include "hopping/quench/linear/quench_params.h"
+#include "parameters/from_std_cin.h"
+#include "arma_support/conv.h"
+
+
+
+namespace NSA1 = std_bhm::parameters::from_std_cin;
+namespace NSA2 = std_bhm::lanczos;
+namespace NSA3 = NSA2::quench_0T;
+namespace NSA4 = NSA3::tuned_hopping;
+namespace NSA5 = std_bhm::hopping::quench::linear;
+namespace NSA6 = std_bhm::arma_support;
+
+int main(int argc, char** argv)
+{
+    const auto main_params = ::NSA4::main_alg_params();
+
+    const auto& l_params = main_params.get_local_params();
+    const auto& fb_params = main_params.get_fock_basis_params();
+    const auto& q_params = main_params.get_quench_params();
+    const auto& dt_and_Nt = main_params.get_step_params();
+    const auto& la_params = main_params.get_full_orthogonalization_params();
+
+    const auto basis = ::NSA3::fock_basis(fb_params);
+    const auto J = ::NSA5::amplitude(q_params);
+    const auto dt = dt_and_Nt.get_dt();
+
+    auto Ohm = ::NSA4::Ohm_1(basis, J, l_params, dt);
+
+    const auto D = basis.get_hilbert_space_dimension();
+    const auto t = ::NSA1::to_value<double>();
+    auto A = ::NSA6::sp_mat_to_sp_cx_mat( Ohm.eval(t) );
+    auto T = arma::sp_mat(D, D);
+    auto K = arma::sp_cx_mat(D, D);
+
+    const auto seed = ::NSA1::to_value<double>();
+    arma::arma_rng::set_seed(seed);
+    auto w_0 = arma::cx_dvec(D, arma::fill::randu);
+
+    ::NSA2::full_orthogonalization(A, T, K, w_0, la_params);
+
+    typedef std::numeric_limits<double> dbl_lim;
+    std::cout.precision(dbl_lim::max_digits10);
+
+    auto T_dense = arma::dmat(T);
+    auto select_eigvals = arma::dvec();
+    auto select_eigvecs = arma::dmat();
+    arma::eig_sym(select_eigvals, select_eigvecs, T_dense);
+    select_eigvals.raw_print(std::cout, "\nSelect eigenvalues:");
+
+    auto A_dense = arma::cx_dmat(A);
+    auto all_eigvals = arma::cx_vec();
+    auto all_eigvecs = arma::cx_mat();
+    arma::eig_gen(all_eigvals, all_eigvecs, A_dense);
+    auto sorted_eigvals = arma::dvec( arma::sort( arma::real(all_eigvals) ) );
+    sorted_eigvals.raw_print(std::cout, "\nAll eigenvalues:");
+
+    std::cout << select_eigvals.n_rows << '\t' << sorted_eigvals.n_rows
+	      << std::endl;
+    
+    return 0;
+}
+

@@ -1,0 +1,24 @@
+// /std_bhm/src/hopping/spatial_params.cpp
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+
+/* Include standard libraries */
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+#include "hopping/spatial_params.h"
+
+
+
+// spatial_params constructor
+namespace NSA1 = std_bhm::hopping;
+
+NSA1::spatial_params::spatial_params(int L, int d)
+    : L{L}, d{d}
+{}

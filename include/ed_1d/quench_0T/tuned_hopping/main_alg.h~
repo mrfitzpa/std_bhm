@@ -1,0 +1,96 @@
+// /std_bhm/include/ed_1d/quench_0T/tuned_hopping/main_alg.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+#ifndef STD_BHM_ED_1D_QUENCH_0T_TUNED_HOPPING_MAIN_ALG_H
+#define STD_BHM_ED_1D_QUENCH_0T_TUNED_HOPPING_MAIN_ALG_H
+
+/* Include standard libraries */
+#include <memory>
+
+/* Non-standard third-party libraries */
+#include "third_party/spimpl.h"
+
+/* Include user-defined header files */
+
+
+
+namespace std_bhm
+{
+
+
+
+namespace hopping
+{
+namespace quench
+{
+namespace linear
+{
+
+class quench; // forward declaration
+
+}
+}
+}
+
+
+
+namespace ed_1d
+{
+
+
+
+class local; // forward declaration
+class fock_basis; // forward declaration
+class step; // forward declaration
+class lanczos_alg; // forward declaration
+
+
+
+namespace quench_0T
+{
+namespace tuned_hopping
+{
+namespace main_alg_detail
+{
+
+namespace NSA1 = std_bhm::ed_1d;
+namespace NSA3 = std_bhm::hopping::quench::linear;
+
+class main_alg
+{
+public:
+    main_alg();
+
+    NSA1::local get_local() const;
+    NSA1::fock_basis get_fock_basis() const;
+    NSA3::quench get_quench() const;
+    NSA1::step get_step() const;
+    NSA1::lanczos_alg get_lanczos_alg() const;
+
+private:
+    class impl;
+    spimpl::impl_ptr<impl> pimpl;
+};
+
+} // end of main_alg_detail namespace
+
+
+
+// lift relevant classes and functions up one namespace
+using std_bhm::ed_1d::quench_0T::tuned_hopping::main_alg_detail::main_alg;
+
+
+
+} // end of tuned_hopping namespace
+} // end of quench_0T namespace
+} // end of ed_1d namespace
+} // end of std_bhm namespace
+
+
+#endif
+ 

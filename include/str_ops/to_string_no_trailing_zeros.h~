@@ -1,0 +1,55 @@
+// std_bhm/include/output/to_string_no_trailing_zeros.h
+
+// -----------------------------------------------------------------------
+
+// Insert summary of file
+
+// -----------------------------------------------------------------------
+
+
+#ifndef STD_BHM_STR_OPS_TO_STRING_NO_TRAILING_ZEROS_H
+#define STD_BHM_STR_OPS_TO_STRING_NO_TRAILING_ZEROS_H
+
+/* Include standard libraries */
+#include <vector>
+#include <string>
+#include <complex>
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+
+
+namespace std_bhm
+{
+namespace output
+{
+namespace to_string_no_trailing_zeros_detail
+{
+
+template <class T>
+using vector_1d = std::vector<T>;
+
+template <class T>
+std::string vector_1d_to_string(vector_1d<T> vec_1d);
+template <class T>
+std::string vector_1d_to_string(vector_1d< std::complex<T> > vec_1d);
+
+
+
+template <class T>
+using vector_2d = std::vector< std::vector<T> >;
+
+template <class T>
+std::string vector_2d_to_string(vector_2d<T> vec_2d);
+
+} // end of to_string_no_trailing_zeros_detail namespace
+
+// lift relevant classes and functions up one namespace
+using std_bhm::output::to_string_no_trailing_zeros_detail::vector_1d_to_string;
+using std_bhm::output::to_string_no_trailing_zeros_detail::vector_2d_to_string;
+
+} // end of output namespace
+} // end of std_bhm namespace
+
+#endif

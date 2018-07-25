@@ -1,0 +1,89 @@
+// /std_bhm/test/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/array_gen
+// /Y.cpp
+
+// -----------------------------------------------------------------------
+
+// This program serves as a unit test of the functions defined in the 
+// .cpp file 'std_bhm/test/bhm_2hs_2pi/konstantinov_and_perel
+// /hopping_quench/finite_temperature/start_in_atomic_lim/block_by_block
+// /hfb/Y.cpp'.
+
+// -----------------------------------------------------------------------
+
+
+/* Include standard libraries */
+#include <vector>
+#include <limits>
+#include <iostream>
+
+/* Non-standard third-party libraries */
+
+/* Include user-defined header files */
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/array_gen/Y.h"
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/array_gen/Y_params.h"
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/main_alg_params.h"
+#include "atomic_lim/local/params.h"
+#include "hopping/spatial_params.h"
+#include "hopping/quench/linear/quench_params.h"
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/step_params.h"
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/epsilon_params.h"
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/array_gen/step_params.h"
+#include "parameters/from_std_cin.h"
+
+
+
+namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel;
+namespace NSA2 = NSA1::hopping_quench::finite_temperature::start_in_atomic_lim;
+namespace NSA3 = NSA2::block_by_block::hfb;
+namespace NSA4 = NSA3::array_gen;
+
+namespace NSA5 = std_bhm::parameters::from_std_cin;
+
+using dbl_vec = std::vector<double>;
+
+int main(int argc, char** argv)
+{
+    const auto& main_params = ::NSA3::main_alg_params();
+
+    const auto& l_params = main_params.get_local_params();
+    const auto& q_params = main_params.get_quench_params();
+    const auto& ds_and_Ns = main_params.get_step_params();
+
+    const auto kx = ::NSA5::to_value<double>();
+    const auto ky = ::NSA5::to_value<double>();
+    const auto& k_vec = dbl_vec{kx, ky};
+    const auto& e_params = ::NSA3::epsilon_params{q_params, k_vec};
+
+    const auto ds = ds_and_Ns.get_ds();
+    const auto Ns = ds_and_Ns.get_Ns();
+    const auto s_offset = ::NSA5::to_value<double>();
+    const auto& s_params = ::NSA4::step_params(Ns, ds, s_offset);
+
+    const auto& y_params = ::NSA4::Y_params(l_params, e_params, s_params);
+    const auto& y_array = ::NSA4::Y(y_params);
+
+    typedef std::numeric_limits<double> dbl_lim;
+    std::cout.precision(dbl_lim::max_digits10);
+    
+    for(auto i=decltype(10){0}; i<10; i++)
+	std::cout << "Y[" << i << "] = " << y_array[i] << std::endl;
+
+    std::cout << std::endl;
+
+    for(auto i=decltype(Ns/2+10){Ns/2-5}; i<Ns/2+5; i++)
+	std::cout << "Y[" << i << "] = " << y_array[i] << std::endl;
+
+    std::cout << std::endl;
+
+    for(auto i=decltype(Ns){Ns-10}; i<Ns; i++)
+	std::cout << "Y[" << i << "] = " << y_array[i] << std::endl;
+    
+    return 0;
+}
