@@ -1,6 +1,6 @@
 // std_bhm/include/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
 // /finite_temperature/start_in_atomic_lim/block_by_block/hfb/array_gen
-// /X_rho_rho.h
+// /X_rho_K.h
 
 // -----------------------------------------------------------------------
 
@@ -10,10 +10,10 @@
 
 #ifndef STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
 FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_ARRAY_GEN_\
-X_RHO_RHO_H
+X_RHO_K_H
 #define STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
 FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_ARRAY_GEN_\
-X_RHO_RHO_H
+X_RHO_K_H
 
 /* Include standard libraries */
 #include <complex>
@@ -53,7 +53,7 @@ class atomic_func_params; // forward declaration
 
 
 
-namespace X_rho_rho_detail
+namespace X_rho_K_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
@@ -63,16 +63,16 @@ namespace NSA3 = NSA2::hfb::array_gen::atomic_func_params_detail;
 using cmplx_dbl = std::complex<double>;
 using cmplx_vec = std::vector<cmplx_dbl>;
 
-cmplx_vec X_rho_rho(const NSA3::atomic_func_params& af_params);
+cmplx_vec X_rho_K(const NSA3::atomic_func_params& af_params);
 
-} // end of X_rho_rho_detail namespace
+} // end of X_rho_K_detail namespace
 
 
 
 // lift relevant classes and functions up one namespace
 using std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench::\
 finite_temperature::start_in_atomic_lim::block_by_block::hfb::array_gen::\
-X_rho_rho_detail::X_rho_rho;
+X_rho_K_detail::X_rho_K;
 
 
 
