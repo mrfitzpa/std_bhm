@@ -15,6 +15,7 @@ max_band_index="100"
 
 ds="0.05"
 Ns="4001"
+step_offset="0.5"
 
 l1="49"
 l2="101"
@@ -32,6 +33,7 @@ ${mu}
 ${max_band_index}
 ${ds}
 ${Ns}
+${step_offset}
 ${l1}
 ${l2}
 ${l3}

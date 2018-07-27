@@ -52,7 +52,8 @@ int main(int argc, char** argv)
 
     const auto ds = ::NSA5::to_value<double>();
     const auto Ns = ::NSA5::to_value<int>();
-    const auto& s_params = ::NSA3::step_params{Ns, ds};
+    const auto step_offset = ::NSA5::to_value<double>();
+    const auto& s_params = ::NSA3::step_params{Ns, ds, step_offset};
 
     const auto& x_params = ::NSA4::params{l_params, s_params};
     const auto& X_rho_rho = ::NSA4::rho_rho(x_params);

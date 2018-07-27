@@ -1,12 +1,12 @@
 // /std_bhm/test/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/X/rho_K.cpp
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/X/K_rho.cpp
 
 // -----------------------------------------------------------------------
 
 // This program serves as a unit test of the class(es) defined in the 
 // .cpp file 'std_bhm/test/bhm_2hs_2pi/konstantinov_and_perel
 // /hopping_quench/finite_temperature/start_in_atomic_lim/block_by_block
-// /hfb/X/rho_K.cpp'.
+// /hfb/X/K_rho.cpp'.
 
 // -----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@
 
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/X/rho_K.h"
+start_in_atomic_lim/block_by_block/hfb/X/K_rho.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/X/base.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
@@ -56,7 +56,7 @@ int main(int argc, char** argv)
     const auto& s_params = ::NSA3::step_params{Ns, ds, step_offset};
 
     const auto& x_params = ::NSA4::params{l_params, s_params};
-    const auto& X_rho_K = ::NSA4::rho_K(x_params);
+    const auto& X_K_rho = ::NSA4::K_rho(x_params);
 
     const auto l1 = ::NSA5::to_value<int>();
     const auto l2 = ::NSA5::to_value<int>();
@@ -65,8 +65,8 @@ int main(int argc, char** argv)
     typedef std::numeric_limits<double> dbl_lim;
     std::cout.precision(dbl_lim::max_digits10);
 
-    std::cout << "X_rho_K(" << l1 << ", " << l2 << ", " << l3 << ") = "
-	      << X_rho_K.eval(l1, l2, l3) << std::endl;
+    std::cout << "X_K_rho(" << l1 << ", " << l2 << ", " << l3 << ") = "
+	      << X_K_rho.eval(l1, l2, l3) << std::endl;
     
     return 0;
 }
