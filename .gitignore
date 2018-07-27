@@ -15,3 +15,8 @@ bin/
 
 # ignore all files in the .d/ directory
 .d/
+
+# ignore all .py, .pyc, and .ipynb files
+*.py
+*.ipynb
+*.pyc

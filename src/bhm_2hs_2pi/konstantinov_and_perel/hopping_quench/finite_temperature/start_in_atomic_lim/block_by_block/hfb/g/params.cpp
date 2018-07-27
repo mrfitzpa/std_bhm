@@ -34,7 +34,7 @@ using local_params = std_bhm::atomic_lim::local::params;
 struct NSA4::params::impl
 {
     impl(const local_params& l_params,
-	 const NSA3::step_params& s_params);
+	 const ::NSA3::step_params& s_params);
 
     const local_params l_params;
     const NSA3::step_params s_params;
