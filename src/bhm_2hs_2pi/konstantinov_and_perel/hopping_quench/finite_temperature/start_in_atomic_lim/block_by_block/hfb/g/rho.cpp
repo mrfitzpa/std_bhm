@@ -66,7 +66,7 @@ namespace unnamed
 namespace
 {
 
-cmplx_vec gen_array(const ::NSA4::params& g_params);
+const cmplx_vec gen_array(const ::NSA4::params& g_params);
 
 } // end of true unnamed namespace
 } // end of 'phony' unnamed namespace
@@ -113,7 +113,7 @@ namespace unnamed
 namespace
 {
 
-cmplx_vec gen_array(const ::NSA4::params& g_params)
+const cmplx_vec gen_array(const ::NSA4::params& g_params)
 {
     const auto& l_params = g_params.get_local_params();
     const auto spectral_func = ::NSA5::spectral_func(l_params);

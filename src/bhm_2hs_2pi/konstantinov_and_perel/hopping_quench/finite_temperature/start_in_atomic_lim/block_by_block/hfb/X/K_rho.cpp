@@ -68,7 +68,7 @@ namespace
 {
 
 int get_Ns(const ::NSA4::params& x_params);
-cmplx_vec gen_array(const ::NSA4::params& x_params);
+const cmplx_vec gen_array(const ::NSA4::params& x_params);
 
 } // end of true unnamed namespace
 } // end of 'phony' unnamed namespace
@@ -140,7 +140,7 @@ namespace unnamed
 namespace
 {
 
-cmplx_vec gen_array(const ::NSA4::params& x_params)
+const cmplx_vec gen_array(const ::NSA4::params& x_params)
 {
     const auto& l_params = x_params.get_local_params();
     const auto kinetic_propagator = ::NSA5::kinetic_propagator(l_params);

@@ -66,7 +66,7 @@ using cmplx_dbl = std::complex<double>;
 class rho_K: public NSA3::base
 {
 public:
-    rho_K(const NSA4::params& X_params);
+    rho_K(const NSA4::params& x_params);
 
 private:
     class impl;
