@@ -4,7 +4,7 @@
 #
 # This script executes the program 'test/bhm_2hs_2pi/konstantinov_and_perel
 # /hopping_quench/finite_temperature/start_in_atomic_lim/block_by_block/hfb
-# /X/rho_rho'
+# /X/rho_K'
 #
 #---------------------------------------------------------------------------
 
@@ -24,14 +24,14 @@ ds="0.05"
 Ns="4001"
 step_offset="-0.5"
 
-l1="804"
-l2="763"
+l1="403"
+l2="201"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 exe_dir=${script_dir/\/scripts\//\/bin\/}
-exe_path=$exe_dir\/rho_rho
+exe_path=$exe_dir\/rho_K
 
 time "$exe_path" <<EOF
 ${beta}
