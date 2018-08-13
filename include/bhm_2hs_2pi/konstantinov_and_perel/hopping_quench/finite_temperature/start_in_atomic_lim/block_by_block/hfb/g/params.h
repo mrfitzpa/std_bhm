@@ -54,7 +54,7 @@ namespace hfb
 
 
 
-class step_params; // forward declaration
+class array_gen_params; // forward declaration
 
 
 
@@ -73,10 +73,10 @@ class params
 {
 public:
     params(const local_params& l_params,
-	   const NSA3::step_params& s_params);
+	   const NSA3::array_gen_params& ag_params);
 
     local_params get_local_params() const;
-    NSA3::step_params get_step_params() const;
+    NSA3::array_gen_params get_array_gen_params() const;
 
 private:
     class impl;

@@ -27,11 +27,10 @@ namespace NSA3 = NSA2::hfb;
 
 struct NSA3::step_params::impl
 {
-    impl(int Ns, double ds, double step_offset);
+    impl(int n_block_steps, double ds);
 
-    const int Ns;
+    const int n_block_steps;
     const double ds;
-    const double step_offset;
 };
 
 
@@ -41,8 +40,8 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 
-NSA3::step_params::step_params(int Ns, double ds, double step_offset)
-    : pimpl{ spimpl::make_impl<impl>(Ns, ds, step_offset) }
+NSA3::step_params::step_params(int n_block_steps, double ds)
+    : pimpl{ spimpl::make_impl<impl>(n_block_steps, ds) }
 {}
 
 
@@ -52,18 +51,21 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 
-NSA3::step_params::impl::impl(int Ns, double ds, double step_offset)
-    : Ns{Ns}, ds{ds}, step_offset{step_offset}
+NSA3::step_params::impl::impl(int n_block_steps, double ds)
+    : n_block_steps{n_block_steps}, ds{ds}
 {}
 
 
 
-// Get # of time steps Ns.
+// Get # of time steps n_block_steps.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 
-int NSA3::step_params::get_Ns() const { return pimpl->Ns; }
+int NSA3::step_params::get_n_block_steps() const
+{
+    return pimpl->n_block_steps;
+}
 
 
 
@@ -73,12 +75,3 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 
 double NSA3::step_params::get_ds() const { return pimpl->ds; }
-
-
-
-// Get step offset.
-namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
-namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-
-double NSA3::step_params::get_step_offset() const { return pimpl->step_offset; }

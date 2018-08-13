@@ -8,10 +8,10 @@
 #---------------------------------------------------------------------------
 
 # Set fixed parameters
-beta="1000.0"
+beta="10.0"
 mu="0.42"
 max_band_index="100"
-s="0.0"
+s="3.6"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.

@@ -60,7 +60,7 @@ namespace NSA3 = NSA2::hfb::Y::params_detail;
 class base
 {
 public:
-    base(const NSA3::params& x_params);
+    base(const NSA3::params& y_params);
     virtual ~base();
 
     double eval(int l1, int l2) const;

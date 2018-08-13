@@ -1,5 +1,5 @@
 // std_bhm/include/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/X/params.h
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/Y/rho_rho.h
 
 // -----------------------------------------------------------------------
 
@@ -8,35 +8,22 @@
 // -----------------------------------------------------------------------
 
 #ifndef STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_X_PARAMS_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_Y_RHO_RHO_H
 #define STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_X_PARAMS_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_Y_RHO_RHO_H
 
 /* Include standard libraries */
-#include <memory>
 
 /* Non-standard third-party libraries */
-#include "third_party/spimpl.h"
 
 /* Include user-defined header files */
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/Y/base.h"
 
 
 
 namespace std_bhm
 {
-
-
-
-namespace atomic_lim
-{
-namespace local
-{
-class params; // forward declaration
-}
-}
-
-
-
 namespace bhm_2hs_2pi
 {
 namespace konstantinov_and_perel
@@ -51,50 +38,47 @@ namespace block_by_block
 {
 namespace hfb
 {
-
-
-
-class array_gen_params; // forward declaration
-
-
-
-namespace X
+namespace Y
 {
+
+
+
 namespace params_detail
+{
+class params; // forward declaration
+}
+
+
+
+namespace rho_rho_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
+namespace NSA3 = NSA2::hfb::Y;
+namespace NSA4 = NSA3::params_detail;
 
-using local_params = std_bhm::atomic_lim::local::params;
-
-class params
+class rho_rho: public NSA3::base
 {
 public:
-    params(const local_params& l_params,
-	   const NSA3::array_gen_params& ag_params);
-
-    local_params get_local_params() const;
-    NSA3::array_gen_params get_array_gen_params() const;
+    rho_rho(const NSA4::params& y_params);
 
 private:
-    class impl;
-    spimpl::impl_ptr<impl> pimpl;
+    virtual int calc_array_index(int l1, int l2) const;
 };
 
-} // end of params_detail namespace
+} // end of rho_rho_detail namespace
 
 
 
 // lift relevant classes and functions up one namespace
 using std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench::\
-finite_temperature::start_in_atomic_lim::block_by_block::hfb::X::\
-params_detail::params;
+finite_temperature::start_in_atomic_lim::block_by_block::hfb::Y::\
+rho_rho_detail::rho_rho;
 
 
 
-} // end of X namespace
+} // end of Y namespace
 } // end of hfb namespace
 } // end of block_by_block namespace
 } // end of start_in_atomic_lim namespace

@@ -13,9 +13,9 @@ beta="10.0"
 mu="0.42"
 max_band_index="100"
 
-ds="0.05"
 Ns="4001"
-step_offset="-0.5"
+ds="0.05"
+step_offset="0.5"
 
 l1="42"
 l2="69"
@@ -31,8 +31,8 @@ time "$exe_path" <<EOF
 ${beta}
 ${mu}
 ${max_band_index}
-${ds}
 ${Ns}
+${ds}
 ${step_offset}
 ${l1}
 ${l2}

@@ -42,11 +42,10 @@ namespace hfb
 class step_params
 {
 public:
-    step_params(int Ns, double ds, double step_offset=0);
+    step_params(int n_block_steps, double ds);
 
-    int get_Ns() const;
+    int get_n_block_steps() const;
     double get_ds() const;
-    double get_step_offset() const;
 
 private:
     class impl;

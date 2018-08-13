@@ -13,11 +13,12 @@ beta="10.0"
 mu="0.42"
 max_band_index="100"
 
-ds="0.05"
 Ns="4001"
+ds="0.05"
+step_offset="0.0"
 
-l1="43"
-l2="4"
+l1="34"
+l2="43"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.
@@ -29,8 +30,9 @@ time "$exe_path" <<EOF
 ${beta}
 ${mu}
 ${max_band_index}
-${ds}
 ${Ns}
+${ds}
+${step_offset}
 ${l1}
 ${l2}
 EOF

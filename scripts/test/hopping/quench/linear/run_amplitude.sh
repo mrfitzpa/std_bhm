@@ -11,7 +11,7 @@ ji="0.00"
 jf="0.035"
 tc="25.0"
 tau_Q="5.0"
-s="0"
+s="24.5"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.

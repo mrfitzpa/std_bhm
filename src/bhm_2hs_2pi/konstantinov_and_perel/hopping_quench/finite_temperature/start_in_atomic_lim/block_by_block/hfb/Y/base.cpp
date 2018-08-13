@@ -24,7 +24,7 @@ start_in_atomic_lim/block_by_block/hfb/Y/params.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/epsilon_params.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/step_params.h"
+start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
 
 #include "hopping/quench/linear/amplitude.h"
 #include "hopping/quench/linear/quench_params.h" 
@@ -121,12 +121,12 @@ const dbl_vec gen_array(const ::NSA3::params& y_params)
     const auto hop_amp = ::unnamed::gen_hop_amp_obj(y_params);
     const auto two_u1_n0 = ::unnamed::calc_two_u1_n0(y_params);
 
-    const auto& s_params = y_params.get_step_params();
-    const auto step_offset = s_params.get_step_offset();
-    const auto ds = s_params.get_ds();
+    const auto& ag_params = y_params.get_array_gen_params();
+    const auto step_offset = ag_params.get_step_offset();
+    const auto ds = ag_params.get_ds();
     const auto s_offset = step_offset * ds;
     
-    const auto Ns = s_params.get_Ns();
+    const auto Ns = ag_params.get_Ns();
     auto array_rep = dbl_vec(Ns);
 
     for(auto l=decltype(Ns){0}; l<Ns; l++)

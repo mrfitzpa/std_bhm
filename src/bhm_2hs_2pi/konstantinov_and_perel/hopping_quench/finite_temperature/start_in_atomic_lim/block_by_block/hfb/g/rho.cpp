@@ -25,7 +25,7 @@ start_in_atomic_lim/block_by_block/hfb/g/base.h"
 start_in_atomic_lim/block_by_block/hfb/g/params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/step_params.h"
+start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
 
 #include "atomic_lim/local/params.h"
 #include "atomic_lim/equilibrium/finite_temperature/local/spectral_func.h"
@@ -118,10 +118,10 @@ const cmplx_vec gen_array(const ::NSA4::params& g_params)
     const auto& l_params = g_params.get_local_params();
     const auto spectral_func = ::NSA5::spectral_func(l_params);
 
-    const auto& s_params = g_params.get_step_params();
-    const auto ds = s_params.get_ds();
+    const auto& ag_params = g_params.get_array_gen_params();
+    const auto ds = ag_params.get_ds();
     
-    const auto Ns = s_params.get_Ns();
+    const auto Ns = ag_params.get_Ns();
     auto array_rep = cmplx_vec(Ns);
 
     for(auto l=decltype(Ns){0}; l<Ns; l++)

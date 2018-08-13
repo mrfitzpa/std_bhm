@@ -25,7 +25,7 @@ start_in_atomic_lim/block_by_block/hfb/X/base.h"
 start_in_atomic_lim/block_by_block/hfb/X/params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/step_params.h"
+start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
 
 #include "atomic_lim/local/params.h"
 #include "atomic_lim/equilibrium/finite_temperature/local/spectral_func.h"
@@ -118,19 +118,19 @@ const cmplx_vec gen_array(const ::NSA4::params& x_params)
     const auto& l_params = x_params.get_local_params();
     const auto spectral_func = ::NSA5::spectral_func(l_params);
 
-    const auto& s_params = x_params.get_step_params();
-    const auto ds = s_params.get_ds();
-    const auto step_offset = s_params.get_step_offset();
+    const auto& ag_params = x_params.get_array_gen_params();
+    const auto ds = ag_params.get_ds();
+    const auto step_offset = ag_params.get_step_offset();
     const auto s_offset = step_offset * ds;
-    const auto neg_i_ds = cmplx_dbl(0, -ds);
+    const auto i_ds = cmplx_dbl(0, ds);
     
-    const auto Ns = s_params.get_Ns();
+    const auto Ns = ag_params.get_Ns();
     auto array_rep = cmplx_vec(Ns);
 
     for(auto l=decltype(Ns){0}; l<Ns; l++)
     {
 	double s = -l * ds + s_offset;
-	array_rep[l] = neg_i_ds * spectral_func.eval(s);
+	array_rep[l] = i_ds * spectral_func.eval(s);
     }
 
     return array_rep;

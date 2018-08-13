@@ -25,7 +25,7 @@ start_in_atomic_lim/block_by_block/hfb/X/base.h"
 start_in_atomic_lim/block_by_block/hfb/X/params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/step_params.h"
+start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
 
 #include "atomic_lim/local/params.h"
 #include "atomic_lim/equilibrium/finite_temperature/local/kinetic_propagator.h"
@@ -113,8 +113,8 @@ namespace
 
 int get_Ns(const ::NSA4::params& x_params)
 {
-    const auto& s_params = x_params.get_step_params();
-    const auto Ns = s_params.get_Ns();
+    const auto& ag_params = x_params.get_array_gen_params();
+    const auto Ns = ag_params.get_Ns();
 
     return Ns;
 }
@@ -145,13 +145,13 @@ const cmplx_vec gen_array(const ::NSA4::params& x_params)
     const auto& l_params = x_params.get_local_params();
     const auto kinetic_propagator = ::NSA5::kinetic_propagator(l_params);
 
-    const auto& s_params = x_params.get_step_params();
-    const auto ds = s_params.get_ds();
-    const auto step_offset = s_params.get_step_offset();
+    const auto& ag_params = x_params.get_array_gen_params();
+    const auto ds = ag_params.get_ds();
+    const auto step_offset = ag_params.get_step_offset();
     const auto s_offset = step_offset * ds;
     const auto i_ds = cmplx_dbl(0, ds);
     
-    const auto Ns = s_params.get_Ns();
+    const auto Ns = ag_params.get_Ns();
     const auto two_Ns = 2 * Ns;
     auto array_rep = cmplx_vec(two_Ns);
 

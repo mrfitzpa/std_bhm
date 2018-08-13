@@ -1,5 +1,6 @@
 // /std_bhm/src/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/X/params.cpp
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb
+// /array_gen_params.cpp
 
 // -----------------------------------------------------------------------
 
@@ -16,10 +17,7 @@
 
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/X/params.h"
-#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
-#include "atomic_lim/local/params.h"
 
 
 
@@ -27,73 +25,69 @@ start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
 
-using local_params = std_bhm::atomic_lim::local::params;
-
-struct NSA4::params::impl
+struct NSA3::array_gen_params::impl
 {
-    impl(const local_params& l_params,
-	 const ::NSA3::array_gen_params& ag_params);
+    impl(int Ns, double ds, double step_offset);
 
-    const local_params l_params;
-    const NSA3::array_gen_params ag_params;
+    const int Ns;
+    const double ds;
+    const double step_offset;
 };
 
 
 
-// params constructor.
+// array_gen_params constructor.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
 
-using local_params = std_bhm::atomic_lim::local::params;
-
-NSA4::params::params(const local_params& l_params,
-		     const ::NSA3::array_gen_params& ag_params)
-    : pimpl{ spimpl::make_impl<impl>(l_params, ag_params) }
+NSA3::array_gen_params::array_gen_params(int Ns,
+					 double ds,
+					 double step_offset)
+    : pimpl{ spimpl::make_impl<impl>(Ns, ds, step_offset) }
 {}
 
 
 
-// params::impl constructor.
+// array_gen_params::impl constructor.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
 
-using local_params = std_bhm::atomic_lim::local::params;
-
-NSA4::params::impl::impl(const local_params& l_params,
-			 const ::NSA3::array_gen_params& ag_params)
-    : l_params{l_params}, ag_params{ag_params}
+NSA3::array_gen_params::impl::impl(int Ns, double ds, double step_offset)
+    : Ns{Ns}, ds{ds}, step_offset{step_offset}
 {}
 
 
 
-// Get local parameters (pertaining to the atomic limit).
+// Get # of time steps.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
 
-using local_params = std_bhm::atomic_lim::local::params;
-
-local_params NSA4::params::get_local_params() const
+int NSA3::array_gen_params::get_Ns() const
 {
-    return pimpl->l_params;
+    return pimpl->Ns;
 }
 
 
 
-// Get step parameters.
+// Get time stepsize ds.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
 
-NSA3::array_gen_params NSA4::params::get_array_gen_params() const
+double NSA3::array_gen_params::get_ds() const { return pimpl->ds; }
+
+
+
+// Get time stepsize ds.
+namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
+namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
+namespace NSA3 = NSA2::hfb;
+
+double NSA3::array_gen_params::get_step_offset() const
 {
-    return pimpl->ag_params;
+    return pimpl->step_offset;
 }
