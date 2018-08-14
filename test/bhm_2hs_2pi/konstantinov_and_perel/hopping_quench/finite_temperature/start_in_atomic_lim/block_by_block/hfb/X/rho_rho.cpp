@@ -38,8 +38,6 @@ namespace NSA5 = NSA3::X;
 
 namespace NSA6 = std_bhm::parameters::from_std_cin;
 
-using local_params = std_bhm::atomic_lim::local::params;
-
 int main(int argc, char** argv)
 {
     const auto x_params = ::NSA4::constr_X_params();
