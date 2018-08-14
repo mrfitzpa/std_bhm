@@ -51,14 +51,6 @@ private:
     virtual double do_eval(int l1, int l2) const = 0;
 };
 
-
-
-// lift relevant classes and functions up one namespace
-using std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench::\
-finite_temperature::start_in_atomic_lim::block_by_block::hfb::Z::base;
-
-
-
 } // end of Z namespace
 } // end of hfb namespace
 } // end of block_by_block namespace
