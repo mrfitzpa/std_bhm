@@ -108,7 +108,7 @@ NSA3::epsilon_params NSA4::params::get_epsilon_params() const
 
 
 
-// Get step parameters.
+// Get array generation parameters.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
