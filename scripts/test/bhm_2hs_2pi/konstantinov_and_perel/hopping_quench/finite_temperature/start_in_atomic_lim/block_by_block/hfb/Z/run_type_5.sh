@@ -4,7 +4,7 @@
 #
 # This script executes the program 'test/bhm_2hs_2pi/konstantinov_and_perel
 # /hopping_quench/finite_temperature/start_in_atomic_lim/block_by_block/hfb
-# /X/type_2'
+# /X/type_5'
 #
 #---------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ l2="73"
 # the absolute path of this script and then modifying it accordingly.
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 exe_dir=${script_dir/\/scripts\//\/bin\/}
-exe_path=$exe_dir\/type_2
+exe_path=$exe_dir\/type_5
 
 time "$exe_path" <<EOF
 ${n_block_steps}

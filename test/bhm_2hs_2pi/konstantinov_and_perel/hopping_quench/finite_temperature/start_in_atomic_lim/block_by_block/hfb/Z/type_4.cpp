@@ -1,12 +1,12 @@
 // /std_bhm/test/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/Z/type_2.cpp
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/Z/type_4.cpp
 
 // -----------------------------------------------------------------------
 
 // This program serves as a unit test of the class(es) defined in the 
 // .cpp file 'std_bhm/test/bhm_2hs_2pi/konstantinov_and_perel
 // /hopping_quench/finite_temperature/start_in_atomic_lim/block_by_block
-// /hfb/Z/type_2.cpp'.
+// /hfb/Z/type_4.cpp'.
 
 // -----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@
 
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/Z/type_2.h"
+start_in_atomic_lim/block_by_block/hfb/Z/type_4.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_step_params.h"
@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 		  n_array.end(),
 		  [&]() { i++; return 1.0 + 0.05 * sin(ds * i); });
     
-    const auto& Z2 = ::NSA5::type_2(n_array);
+    const auto& Z4 = ::NSA5::type_4(n_array);
 
     const auto l1 = ::NSA6::to_value<int>();
     const auto l2 = ::NSA6::to_value<int>();
@@ -65,8 +65,8 @@ int main(int argc, char** argv)
     typedef std::numeric_limits<double> dbl_lim;
     std::cout.precision(dbl_lim::max_digits10);
 
-    std::cout << "Z2(" << l1 << ", " << l2 << ") = "
-	      << Z2.eval(l1, l2) << std::endl;
+    std::cout << "Z4(" << l1 << ", " << l2 << ") = "
+	      << Z4.eval(l1, l2) << std::endl;
     
     return 0;
 }

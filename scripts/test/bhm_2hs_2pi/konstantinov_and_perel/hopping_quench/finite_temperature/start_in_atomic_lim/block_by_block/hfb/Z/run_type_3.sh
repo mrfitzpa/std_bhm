@@ -9,9 +9,8 @@
 #---------------------------------------------------------------------------
 
 # Set fixed parameters
-Ns="4001"
+n_block_steps="2000"
 ds="0.05"
-step_offset="0.0"
 
 l1="101"
 l2="23"
@@ -23,9 +22,8 @@ exe_dir=${script_dir/\/scripts\//\/bin\/}
 exe_path=$exe_dir\/type_3
 
 time "$exe_path" <<EOF
-${Ns}
+${n_block_steps}
 ${ds}
-${step_offset}
 ${l1}
 ${l2}
 EOF

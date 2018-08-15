@@ -44,7 +44,7 @@ struct NSA4::set_params::impl
 
 
 
-// params constructor.
+// set_params constructor.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
@@ -59,7 +59,7 @@ NSA4::set_params::set_params(const local_params& l_params,
 
 
 
-// params::impl constructor.
+// set_params::impl constructor.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;

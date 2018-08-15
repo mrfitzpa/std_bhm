@@ -25,10 +25,10 @@
 start_in_atomic_lim/block_by_block/hfb/Z/type_3.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_array_gen_params.h"
+start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_step_params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
+start_in_atomic_lim/block_by_block/hfb/step_params.h"
 
 #include "parameters/from_std_cin.h"
 
@@ -46,9 +46,10 @@ using dbl_vec = std::vector<double>;
 
 int main(int argc, char** argv)
 {
-    const auto ag_params = ::NSA4::constr_array_gen_params();
-    const auto Ns = ag_params.get_Ns();
-    const auto ds = ag_params.get_ds();
+    const auto s_params = ::NSA4::constr_step_params();
+    const auto n_block_steps = s_params.get_n_block_steps();
+    const auto Ns = 2 * (n_block_steps + 1);
+    const auto ds = s_params.get_ds();
 
     auto n_array = dbl_vec(Ns);
     auto i = -1;
@@ -56,7 +57,7 @@ int main(int argc, char** argv)
 		  n_array.end(),
 		  [&]() { i++; return 1.0 + 0.05 * sin(ds * i); });
     
-    const auto& Z1 = ::NSA5::type_3(n_array);
+    const auto& Z3 = ::NSA5::type_3(n_array);
 
     const auto l1 = ::NSA6::to_value<int>();
     const auto l2 = ::NSA6::to_value<int>();
@@ -64,8 +65,8 @@ int main(int argc, char** argv)
     typedef std::numeric_limits<double> dbl_lim;
     std::cout.precision(dbl_lim::max_digits10);
 
-    std::cout << "Z1(" << l1 << ", " << l2 << ") = "
-	      << Z1.eval(l1, l2) << std::endl;
+    std::cout << "Z3(" << l1 << ", " << l2 << ") = "
+	      << Z3.eval(l1, l2) << std::endl;
     
     return 0;
 }
