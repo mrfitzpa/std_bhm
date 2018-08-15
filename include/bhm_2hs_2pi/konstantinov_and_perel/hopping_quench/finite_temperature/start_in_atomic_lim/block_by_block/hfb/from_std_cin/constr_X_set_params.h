@@ -1,5 +1,6 @@
 // std_bhm/include/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/X/set.h
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/from_std_cin
+// /constr_X_set_params.h
 
 // -----------------------------------------------------------------------
 
@@ -8,15 +9,15 @@
 // -----------------------------------------------------------------------
 
 #ifndef STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_X_SET_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_FROM_STD_CIN_\
+CONSTR_X_SET_PARAMS_H
 #define STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_X_SET_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_FROM_STD_CIN_\
+CONSTR_X_SET_PARAMS_H
 
 /* Include standard libraries */
-#include <memory>
 
 /* Non-standard third-party libraries */
-#include "third_party/spimpl.h"
 
 /* Include user-defined header files */
 
@@ -38,64 +39,42 @@ namespace block_by_block
 {
 namespace hfb
 {
+
+
+
 namespace X
 {
-
-
-
 namespace set_params_detail
 {
 class set_params; // forward declaration
 }
-
-namespace base_detail
-{
-class base; // forward declaration
 }
 
 
 
-namespace set_detail
+namespace from_std_cin
+{
+namespace constr_X_set_params_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb::X;
+namespace NSA3 = NSA2::hfb::X::set_params_detail;
 
-namespace NSA4 = NSA3::set_params_detail;
-namespace NSA5 = NSA3::base_detail;
+NSA3::set_params constr_X_set_params();
 
-class set
-{
-public:
-    set(const NSA4::set_params& x_set_params);
-
-    const NSA5::base& get_rho_rho_A() const;
-    const NSA5::base& get_rho_rho_B() const;
-
-    const NSA5::base& get_rho_K_A() const;
-    const NSA5::base& get_rho_K_B() const;
-
-    const NSA5::base& get_K_rho_A() const;
-    const NSA5::base& get_K_rho_B() const;
-
-private:
-    class impl;
-    spimpl::impl_ptr<impl> pimpl;
-};
-
-} // end of set_detail namespace
+} // end of constr_X_set_params_detail namespace
 
 
 
 // lift relevant classes and functions up one namespace
 using std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench::\
-finite_temperature::start_in_atomic_lim::block_by_block::hfb::X::\
-set_detail::set;
+finite_temperature::start_in_atomic_lim::block_by_block::hfb::\
+from_std_cin::constr_X_set_params_detail::constr_X_set_params;
 
 
 
-} // end of X namespace
+} // end of from_std_cin namespace
 } // end of hfb namespace
 } // end of block_by_block namespace
 } // end of start_in_atomic_lim namespace
