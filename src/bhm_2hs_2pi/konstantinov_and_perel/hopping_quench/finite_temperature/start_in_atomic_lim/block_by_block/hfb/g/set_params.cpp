@@ -39,7 +39,7 @@ struct NSA4::set_params::impl
 	 const ::NSA3::step_params& s_params);
 
     const local_params l_params;
-    const NSA3::step_params s_params;
+    const ::NSA3::step_params s_params;
 };
 
 

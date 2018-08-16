@@ -1,5 +1,5 @@
 // /std_bhm/src/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/X/set_params.cpp
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/Y/set_params.cpp
 
 // -----------------------------------------------------------------------
 
@@ -16,8 +16,10 @@
 
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/X/set_params.h"
+start_in_atomic_lim/block_by_block/hfb/Y/set_params.h"
 
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/epsilon_params.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/step_params.h"
 
@@ -29,16 +31,18 @@ start_in_atomic_lim/block_by_block/hfb/step_params.h"
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA4 = NSA3::Y;
 
 using local_params = std_bhm::atomic_lim::local::params;
 
 struct NSA4::set_params::impl
 {
     impl(const local_params& l_params,
+	 const ::NSA3::epsilon_params& e_params,
 	 const ::NSA3::step_params& s_params);
 
     const local_params l_params;
+    const ::NSA3::epsilon_params e_params;
     const ::NSA3::step_params s_params;
 };
 
@@ -48,13 +52,14 @@ struct NSA4::set_params::impl
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA4 = NSA3::Y;
 
 using local_params = std_bhm::atomic_lim::local::params;
 
 NSA4::set_params::set_params(const local_params& l_params,
+			     const ::NSA3::epsilon_params& e_params,
 			     const ::NSA3::step_params& s_params)
-    : pimpl{ spimpl::make_impl<impl>(l_params, s_params) }
+    : pimpl{ spimpl::make_impl<impl>(l_params, e_params, s_params) }
 {}
 
 
@@ -63,13 +68,14 @@ NSA4::set_params::set_params(const local_params& l_params,
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA4 = NSA3::Y;
 
 using local_params = std_bhm::atomic_lim::local::params;
 
 NSA4::set_params::impl::impl(const local_params& l_params,
+			     const ::NSA3::epsilon_params& e_params,
 			     const ::NSA3::step_params& s_params)
-    : l_params{l_params}, s_params{s_params}
+    : l_params{l_params}, e_params{e_params}, s_params{s_params}
 {}
 
 
@@ -78,7 +84,7 @@ NSA4::set_params::impl::impl(const local_params& l_params,
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA4 = NSA3::Y;
 
 using local_params = std_bhm::atomic_lim::local::params;
 
@@ -89,11 +95,24 @@ local_params NSA4::set_params::get_local_params() const
 
 
 
+// Get epsilon parameters.
+namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
+namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
+namespace NSA3 = NSA2::hfb;
+namespace NSA4 = NSA3::Y;
+
+NSA3::epsilon_params NSA4::set_params::get_epsilon_params() const
+{
+    return pimpl->e_params;
+}
+
+
+
 // Get step parameters.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA4 = NSA3::Y;
 
 NSA3::step_params NSA4::set_params::get_step_params() const
 {
