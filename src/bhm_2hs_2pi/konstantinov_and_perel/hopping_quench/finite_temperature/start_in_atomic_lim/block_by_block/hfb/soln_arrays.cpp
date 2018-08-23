@@ -34,8 +34,8 @@ struct NSA3::soln_arrays::impl
 {
     impl(cmplx_vec& y_rho, cmplx_vec& y_K);
 
-    cmplx_vec& y_rho;
-    cmplx_vec& y_K;
+    cmplx_vec y_rho;
+    cmplx_vec y_K;
 };
 
 
