@@ -21,10 +21,10 @@
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/Y/K_rho.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/Y/params.h"
+start_in_atomic_lim/block_by_block/hfb/Y/element_params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_Y_params.h"
+start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_Y_element_params.h"
 
 #include "parameters/from_std_cin.h"
 
@@ -40,8 +40,8 @@ namespace NSA6 = std_bhm::parameters::from_std_cin;
 
 int main(int argc, char** argv)
 {
-    const auto y_params = ::NSA4::constr_Y_params();
-    const auto& Y_K_rho = ::NSA5::K_rho(y_params);
+    const auto y_element_params = ::NSA4::constr_Y_element_params();
+    const auto& Y_K_rho = ::NSA5::K_rho(y_element_params);
 
     const auto l1 = ::NSA6::to_value<int>();
     const auto l2 = ::NSA6::to_value<int>();

@@ -21,7 +21,7 @@ FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_X_RHO_K_H
 
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/X/base.h"
+start_in_atomic_lim/block_by_block/hfb/X/element.h"
 
 
 
@@ -46,9 +46,9 @@ namespace X
 
 
 
-namespace params_detail
+namespace element_params_detail
 {
-class params; // forward declaration
+class element_params; // forward declaration
 }
 
 
@@ -59,14 +59,14 @@ namespace rho_K_detail
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::X;
-namespace NSA4 = NSA3::params_detail;
+namespace NSA4 = NSA3::element_params_detail;
 
 using cmplx_dbl = std::complex<double>;
 
-class rho_K: public NSA3::base
+class rho_K: public NSA3::element
 {
 public:
-    rho_K(const NSA4::params& x_params);
+    rho_K(const NSA4::element_params& x_element_params);
 
 private:
     class impl;

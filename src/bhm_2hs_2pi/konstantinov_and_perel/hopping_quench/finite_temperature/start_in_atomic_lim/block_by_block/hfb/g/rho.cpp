@@ -20,9 +20,9 @@
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/g/rho.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/g/base.h"
+start_in_atomic_lim/block_by_block/hfb/g/element.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/g/params.h"
+start_in_atomic_lim/block_by_block/hfb/g/element_params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
@@ -43,7 +43,7 @@ using cmplx_vec = std::vector<cmplx_dbl>;
 
 struct NSA4::rho::impl
 {
-    impl(const ::NSA4::params& g_params);
+    impl(const ::NSA4::element_params& g_element_params);
 
     const cmplx_vec array_rep;
 };
@@ -66,7 +66,7 @@ namespace unnamed
 namespace
 {
 
-const cmplx_vec gen_array(const ::NSA4::params& g_params);
+const cmplx_vec gen_array(const ::NSA4::element_params& g_element_params);
 
 } // end of true unnamed namespace
 } // end of 'phony' unnamed namespace
@@ -79,8 +79,8 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::g;
 
-NSA4::rho::rho(const ::NSA4::params& g_params)
-    : pimpl{ spimpl::make_impl<impl>(g_params) }
+NSA4::rho::rho(const ::NSA4::element_params& g_element_params)
+    : pimpl{ spimpl::make_impl<impl>(g_element_params) }
 {}
 
 
@@ -91,8 +91,8 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::g;
 
-NSA4::rho::impl::impl(const ::NSA4::params& g_params)
-    : array_rep( ::unnamed::gen_array(g_params) )
+NSA4::rho::impl::impl(const ::NSA4::element_params& g_element_params)
+    : array_rep( ::unnamed::gen_array(g_element_params) )
 {}
 
 
@@ -113,12 +113,12 @@ namespace unnamed
 namespace
 {
 
-const cmplx_vec gen_array(const ::NSA4::params& g_params)
+const cmplx_vec gen_array(const ::NSA4::element_params& g_element_params)
 {
-    const auto& l_params = g_params.get_local_params();
+    const auto& l_params = g_element_params.get_local_params();
     const auto spectral_func = ::NSA5::spectral_func(l_params);
 
-    const auto& ag_params = g_params.get_array_gen_params();
+    const auto& ag_params = g_element_params.get_array_gen_params();
     const auto ds = ag_params.get_ds();
     
     const auto Ns = ag_params.get_Ns();

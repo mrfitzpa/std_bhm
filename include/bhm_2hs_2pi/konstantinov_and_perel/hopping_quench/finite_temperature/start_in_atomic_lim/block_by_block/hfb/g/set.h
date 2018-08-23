@@ -48,9 +48,9 @@ namespace set_params_detail
 class set_params; // forward declaration
 }
 
-namespace base_detail
+namespace element_detail
 {
-class base; // forward declaration
+class element; // forward declaration
 }
 
 
@@ -63,15 +63,15 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::g;
 
 namespace NSA4 = NSA3::set_params_detail;
-namespace NSA5 = NSA3::base_detail;
+namespace NSA5 = NSA3::element_detail;
 
 class set
 {
 public:
     set(const NSA4::set_params& g_set_params);
 
-    const NSA5::base& get_rho() const;
-    const NSA5::base& get_K() const;
+    const NSA5::element& get_rho() const;
+    const NSA5::element& get_K() const;
 
 private:
     class impl;

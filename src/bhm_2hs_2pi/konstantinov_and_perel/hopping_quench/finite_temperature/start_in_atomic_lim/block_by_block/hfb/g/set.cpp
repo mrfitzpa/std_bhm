@@ -20,9 +20,9 @@ start_in_atomic_lim/block_by_block/hfb/g/set.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/g/set_params.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/g/base.h"
+start_in_atomic_lim/block_by_block/hfb/g/element.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/g/params.h"
+start_in_atomic_lim/block_by_block/hfb/g/element_params.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/g/rho.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
@@ -66,7 +66,8 @@ namespace unnamed
 namespace
 {
 
-const ::NSA4::params gen_g_params(const ::NSA4::set_params& g_set_params);
+const ::NSA4::element_params gen_g_element_params(
+                                 const ::NSA4::set_params& g_set_params);
 
 const ::NSA4::rho gen_g_rho(const ::NSA4::set_params& g_set_params);
 const ::NSA4::K gen_g_K(const ::NSA4::set_params& g_set_params);
@@ -101,7 +102,7 @@ NSA4::set::impl::impl(const ::NSA4::set_params& g_set_params)
 
 
 
-// Generate g_params.
+// Generate g_element_params.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
@@ -112,7 +113,8 @@ namespace unnamed
 namespace
 {
 
-const ::NSA4::params gen_g_params(const ::NSA4::set_params& g_set_params)
+const ::NSA4::element_params gen_g_element_params(
+                                 const ::NSA4::set_params& g_set_params)
 {
     const auto& l_params = g_set_params.get_local_params();
     const auto& s_params = g_set_params.get_step_params();
@@ -123,7 +125,7 @@ const ::NSA4::params gen_g_params(const ::NSA4::set_params& g_set_params)
     const auto step_offset = 0.0;
     const auto ag_params = ::NSA3::array_gen_params(Ns, ds, step_offset);
 
-    return ::NSA4::params(l_params, ag_params);
+    return ::NSA4::element_params(l_params, ag_params);
 }
 
 } // end of true unnamed namespace
@@ -144,9 +146,9 @@ namespace
 
 const ::NSA4::rho gen_g_rho(const ::NSA4::set_params& g_set_params)
 {
-    const auto g_params = ::unnamed::gen_g_params(g_set_params);
+    const auto g_element_params = ::unnamed::gen_g_element_params(g_set_params);
 
-    return ::NSA4::rho(g_params);
+    return ::NSA4::rho(g_element_params);
 }
 
 } // end of true unnamed namespace
@@ -167,9 +169,9 @@ namespace
 
 const ::NSA4::K gen_g_K(const ::NSA4::set_params& g_set_params)
 {
-    const auto g_params = ::unnamed::gen_g_params(g_set_params);
+    const auto g_element_params = ::unnamed::gen_g_element_params(g_set_params);
 
-    return ::NSA4::K(g_params);
+    return ::NSA4::K(g_element_params);
 }
 
 } // end of true unnamed namespace
@@ -183,7 +185,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::g;
 
-const NSA4::base& NSA4::set::get_rho() const
+const NSA4::element& NSA4::set::get_rho() const
 {
     return pimpl->g_rho;
 }
@@ -196,7 +198,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::g;
 
-const NSA4::base& NSA4::set::get_K() const
+const NSA4::element& NSA4::set::get_K() const
 {
     return pimpl->g_K;
 }

@@ -20,9 +20,9 @@
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/X/K_rho.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/X/base.h"
+start_in_atomic_lim/block_by_block/hfb/X/element.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/X/params.h"
+start_in_atomic_lim/block_by_block/hfb/X/element_params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
@@ -43,7 +43,7 @@ using cmplx_vec = std::vector<cmplx_dbl>;
 
 struct NSA4::K_rho::impl
 {
-    impl(const ::NSA4::params& x_params);
+    impl(const ::NSA4::element_params& x_element_params);
 
     const int Ns;
     const cmplx_vec array_rep;
@@ -67,8 +67,8 @@ namespace unnamed
 namespace
 {
 
-int get_Ns(const ::NSA4::params& x_params);
-const cmplx_vec gen_array(const ::NSA4::params& x_params);
+int get_Ns(const ::NSA4::element_params& x_element_params);
+const cmplx_vec gen_array(const ::NSA4::element_params& x_element_params);
 
 } // end of true unnamed namespace
 } // end of 'phony' unnamed namespace
@@ -81,8 +81,8 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::X;
 
-NSA4::K_rho::K_rho(const ::NSA4::params& x_params)
-    : pimpl{ spimpl::make_impl<impl>(x_params) }
+NSA4::K_rho::K_rho(const ::NSA4::element_params& x_element_params)
+    : pimpl{ spimpl::make_impl<impl>(x_element_params) }
 {}
 
 
@@ -93,9 +93,9 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::X;
 
-NSA4::K_rho::impl::impl(const ::NSA4::params& x_params)
-    : Ns{ ::unnamed::get_Ns(x_params) },
-      array_rep( ::unnamed::gen_array(x_params) )
+NSA4::K_rho::impl::impl(const ::NSA4::element_params& x_element_params)
+    : Ns{ ::unnamed::get_Ns(x_element_params) },
+      array_rep( ::unnamed::gen_array(x_element_params) )
 {}
 
 
@@ -111,9 +111,9 @@ namespace unnamed
 namespace
 {
 
-int get_Ns(const ::NSA4::params& x_params)
+int get_Ns(const ::NSA4::element_params& x_element_params)
 {
-    const auto& ag_params = x_params.get_array_gen_params();
+    const auto& ag_params = x_element_params.get_array_gen_params();
     const auto Ns = ag_params.get_Ns();
 
     return Ns;
@@ -140,12 +140,12 @@ namespace unnamed
 namespace
 {
 
-const cmplx_vec gen_array(const ::NSA4::params& x_params)
+const cmplx_vec gen_array(const ::NSA4::element_params& x_element_params)
 {
-    const auto& l_params = x_params.get_local_params();
+    const auto& l_params = x_element_params.get_local_params();
     const auto kinetic_propagator = ::NSA5::kinetic_propagator(l_params);
 
-    const auto& ag_params = x_params.get_array_gen_params();
+    const auto& ag_params = x_element_params.get_array_gen_params();
     const auto ds = ag_params.get_ds();
     const auto step_offset = ag_params.get_step_offset();
     const auto s_offset = step_offset * ds;

@@ -21,7 +21,7 @@ FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_Z_TYPE_2_H
 
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/Z/base.h"
+start_in_atomic_lim/block_by_block/hfb/Z/element.h"
 
 
 
@@ -52,7 +52,7 @@ namespace NSA3 = NSA2::hfb::Z;
 
 using dbl_vec = std::vector<double>;
 
-class type_2: public NSA3::base
+class type_2: public NSA3::element
 {
 public:
     type_2(const dbl_vec& n_array);

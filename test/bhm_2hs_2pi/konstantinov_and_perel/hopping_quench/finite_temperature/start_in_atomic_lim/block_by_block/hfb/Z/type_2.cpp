@@ -13,8 +13,6 @@
 
 /* Include standard libraries */
 #include <vector>
-#include <cmath>
-#include <algorithm>
 #include <limits>
 #include <iostream>
 
@@ -25,10 +23,7 @@
 start_in_atomic_lim/block_by_block/hfb/Z/type_2.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_step_params.h"
-
-#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/step_params.h"
+start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_test_n_array.h"
 
 #include "parameters/from_std_cin.h"
 
@@ -46,17 +41,7 @@ using dbl_vec = std::vector<double>;
 
 int main(int argc, char** argv)
 {
-    const auto s_params = ::NSA4::constr_step_params();
-    const auto n_block_steps = s_params.get_n_block_steps();
-    const auto Ns = 2 * (n_block_steps + 1);
-    const auto ds = s_params.get_ds();
-
-    auto n_array = dbl_vec(Ns);
-    auto i = -1;
-    std::generate(n_array.begin(),
-		  n_array.end(),
-		  [&]() { i++; return 1.0 + 0.05 * sin(ds * i); });
-    
+    const auto n_array = ::NSA4::constr_test_n_array();
     const auto& Z2 = ::NSA5::type_2(n_array);
 
     const auto l1 = ::NSA6::to_value<int>();
