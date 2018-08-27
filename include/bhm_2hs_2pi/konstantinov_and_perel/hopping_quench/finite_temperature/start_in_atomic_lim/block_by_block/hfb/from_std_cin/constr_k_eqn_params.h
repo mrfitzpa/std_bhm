@@ -1,6 +1,6 @@
 // std_bhm/include/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
 // /finite_temperature/start_in_atomic_lim/block_by_block/hfb/from_std_cin
-// /constr_g_set_params.h
+// /constr_k_eqn_params.h
 
 // -----------------------------------------------------------------------
 
@@ -10,10 +10,10 @@
 
 #ifndef STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
 FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_FROM_STD_CIN_\
-CONSTR_G_SET_PARAMS_H
+CONSTR_K_EQN_PARAMS_H
 #define STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
 FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_FROM_STD_CIN_\
-CONSTR_G_SET_PARAMS_H
+CONSTR_K_EQN_PARAMS_H
 
 /* Include standard libraries */
 
@@ -42,11 +42,11 @@ namespace hfb
 
 
 
-namespace g
+namespace k_eqn
 {
-namespace set_params_detail
+namespace params_detail
 {
-class set_params; // forward declaration
+class params; // forward declaration
 }
 }
 
@@ -54,23 +54,23 @@ class set_params; // forward declaration
 
 namespace from_std_cin
 {
-namespace constr_g_set_params_detail
+namespace constr_k_eqn_params_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb::g::set_params_detail;
+namespace NSA3 = NSA2::hfb::k_eqn::params_detail;
 
-NSA3::set_params constr_g_set_params();
+NSA3::params constr_k_eqn_params();
 
-} // end of constr_g_set_params_detail namespace
+} // end of constr_k_eqn_params_detail namespace
 
 
 
 // lift relevant classes and functions up one namespace
 using std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench::\
 finite_temperature::start_in_atomic_lim::block_by_block::hfb::\
-from_std_cin::constr_g_set_params_detail::constr_g_set_params;
+from_std_cin::constr_k_eqn_params_detail::constr_k_eqn_params;
 
 
 

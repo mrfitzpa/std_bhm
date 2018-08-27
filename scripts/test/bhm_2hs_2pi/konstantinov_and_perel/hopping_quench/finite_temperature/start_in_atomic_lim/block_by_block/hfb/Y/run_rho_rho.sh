@@ -20,12 +20,13 @@ tau_Q="0.1"
 L="50"
 k_ints="5 2 1"
 
+n_block_steps="2000"
 ds="0.05"
-Ns="4001"
+
 step_offset="-0.5"
 
 l1="804"
-l2="763"
+l2="705"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.
@@ -42,7 +43,7 @@ ${tc}
 ${tau_Q}
 ${L}
 ${k_ints}
-${Ns}
+${n_block_steps}
 ${ds}
 ${step_offset}
 ${l1}

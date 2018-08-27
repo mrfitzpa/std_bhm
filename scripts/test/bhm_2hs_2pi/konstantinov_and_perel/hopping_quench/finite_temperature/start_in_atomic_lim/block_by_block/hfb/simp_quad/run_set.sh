@@ -23,10 +23,10 @@ k_ints="5 2 1"
 n_block_steps="2000"
 ds="0.05"
 
-li="22"
-n_steps="87"
-m1="555"
-m2="555"
+li="237"
+n_steps="89"
+m1="567"
+m2="876"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.
@@ -35,18 +35,16 @@ exe_dir=${script_dir/\/scripts\//\/bin\/}
 exe_path=$exe_dir\/set
 
 time "$exe_path" <<EOF
-${n_block_steps}
-${ds}
 ${beta}
 ${mu}
 ${max_band_index}
+${jf}
+${tc}
+${tau_Q}
+${L}
+${k_ints}
 ${n_block_steps}
 ${ds}
-${n_block_steps}
-${m2}
-${beta}
-${mu}
-${max_band_index}
 ${n_block_steps}
 ${ds}
 ${beta}
@@ -59,6 +57,8 @@ ${L}
 ${k_ints}
 ${n_block_steps}
 ${ds}
+${n_block_steps}
+${m2}
 ${li}
 ${n_steps}
 ${m1}

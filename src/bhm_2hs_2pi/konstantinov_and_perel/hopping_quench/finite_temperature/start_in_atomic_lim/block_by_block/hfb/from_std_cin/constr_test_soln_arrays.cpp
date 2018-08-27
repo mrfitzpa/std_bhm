@@ -20,15 +20,16 @@
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_test_soln_arrays.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_g_set_params.h"
+start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_k_eqn_params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/soln_arrays.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/g/set.h"
+start_in_atomic_lim/block_by_block/hfb/k_eqn/params.h"
+
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/g/set_params.h"
+start_in_atomic_lim/block_by_block/hfb/g/set.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/g/element.h"
 
@@ -51,8 +52,8 @@ using cmplx_vec = std::vector<cmplx_dbl>;
 
 NSA3::soln_arrays NSA5::constr_test_soln_arrays()
 {
-    const auto g_set_params = ::NSA4::constr_g_set_params();
-    const auto g_set = ::NSA6::set{g_set_params};
+    const auto k_eqn_params = ::NSA4::constr_k_eqn_params();
+    const auto g_set = ::NSA6::set{k_eqn_params};
     const auto& g_rho = g_set.get_rho();
     const auto& g_K = g_set.get_K();
 

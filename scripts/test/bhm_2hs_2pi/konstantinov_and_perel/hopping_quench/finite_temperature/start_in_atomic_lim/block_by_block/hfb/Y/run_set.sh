@@ -23,8 +23,8 @@ k_ints="5 2 1"
 n_block_steps="2000"
 ds="0.05"
 
-l1="223"
-l2="49"
+l1="804"
+l2="705"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.

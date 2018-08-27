@@ -38,29 +38,32 @@ namespace block_by_block
 {
 namespace hfb
 {
-namespace Y
+
+
+
+namespace k_eqn
 {
-
-
-
-namespace element_params_detail
+namespace params_detail
 {
-class element_params; // forward declaration
+class params; // forward declaration
+}
 }
 
 
 
+namespace Y
+{
 namespace element_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb::Y::element_params_detail;
+namespace NSA3 = NSA2::hfb::k_eqn::params_detail;
 
 class element
 {
 public:
-    element(const NSA3::element_params& y_element_params);
+    element(const NSA3::params& k_eqn_params, double step_offset);
     virtual ~element();
 
     double eval(int l1, int l2) const;

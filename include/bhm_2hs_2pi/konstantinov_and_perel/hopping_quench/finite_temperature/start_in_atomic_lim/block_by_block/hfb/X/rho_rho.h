@@ -41,32 +41,36 @@ namespace block_by_block
 {
 namespace hfb
 {
-namespace X
+
+
+
+namespace k_eqn
 {
-
-
-
-namespace element_params_detail
+namespace params_detail
 {
-class element_params; // forward declaration
+class params; // forward declaration
+}
 }
 
 
 
+namespace X
+{
 namespace rho_rho_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::X;
-namespace NSA4 = NSA3::element_params_detail;
+
+namespace NSA4 = NSA2::hfb::k_eqn::params_detail;
 
 using cmplx_dbl = std::complex<double>;
 
 class rho_rho: public NSA3::element
 {
 public:
-    rho_rho(const NSA4::element_params& x_element_params);
+    rho_rho(const NSA4::params& k_eqn_params, double step_offset);
 
 private:
     class impl;

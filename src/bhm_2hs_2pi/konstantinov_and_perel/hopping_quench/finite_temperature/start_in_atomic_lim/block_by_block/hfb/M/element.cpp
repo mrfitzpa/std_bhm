@@ -18,8 +18,6 @@
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/M/element.h"
-#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/M/element_ctor_args.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/X/element.h"
@@ -39,10 +37,11 @@ namespace NSA6 = NSA3::Sigma;
 
 struct NSA4::element::impl
 {
-    impl(const ::NSA4::element_ctor_args& m_element_ctor_args);
+    impl(const ::NSA5::element& X_element,
+	 const ::NSA6::element& Sigma_element);
 
-    const NSA5::element& X_element;
-    const NSA6::element& Sigma_element;
+    const ::NSA5::element& X_element;
+    const ::NSA6::element& Sigma_element;
 };
 
 
@@ -53,8 +52,12 @@ namespace NSA2 = NSA1::hopping_quench::finite_temperature::start_in_atomic_lim;
 namespace NSA3 = NSA2::block_by_block::hfb;
 namespace NSA4 = NSA3::M;
 
-NSA4::element::element(const ::NSA4::element_ctor_args& m_element_ctor_args)
-    : pimpl{ spimpl::make_impl<impl>(m_element_ctor_args) }
+namespace NSA5 = NSA3::X;
+namespace NSA6 = NSA3::Sigma;
+
+NSA4::element::element(const ::NSA5::element& X_element,
+		       const ::NSA6::element& Sigma_element)
+    : pimpl{ spimpl::make_impl<impl>(X_element, Sigma_element) }
 {}
 
 
@@ -65,9 +68,13 @@ namespace NSA2 = NSA1::hopping_quench::finite_temperature::start_in_atomic_lim;
 namespace NSA3 = NSA2::block_by_block::hfb;
 namespace NSA4 = NSA3::M;
 
-NSA4::element::impl::impl(const ::NSA4::element_ctor_args& m_element_ctor_args)
-    : X_element{ m_element_ctor_args.get_X_element() },
-      Sigma_element{ m_element_ctor_args.get_Sigma_element() }
+namespace NSA5 = NSA3::X;
+namespace NSA6 = NSA3::Sigma;
+
+NSA4::element::impl::impl(const ::NSA5::element& X_element,
+			  const ::NSA6::element& Sigma_element)
+    : X_element{X_element},
+      Sigma_element{Sigma_element}
 {}
 
 

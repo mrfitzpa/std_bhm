@@ -22,13 +22,13 @@
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/M/set.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/M/set_ctor_args.h"
-#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/M/element.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_M_set_ctor_args.h"
+start_in_atomic_lim/block_by_block/hfb/k_eqn/params.h"
 
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_k_eqn_params.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/from_std_cin/constr_test_n_array.h"
 
@@ -46,10 +46,10 @@ namespace NSA6 = std_bhm::parameters::from_std_cin;
 
 int main(int argc, char** argv)
 {
+    const auto k_eqn_params = ::NSA4::constr_k_eqn_params();
     const auto n_array = ::NSA4::constr_test_n_array();
     
-    const auto m_set_ctor_args = ::NSA4::constr_M_set_ctor_args(n_array);
-    const auto& M_set = ::NSA5::set{m_set_ctor_args};
+    const auto& M_set = ::NSA5::set{k_eqn_params, n_array};
 
     const auto l1 = ::NSA6::to_value<int>();
     const auto l2 = ::NSA6::to_value<int>();

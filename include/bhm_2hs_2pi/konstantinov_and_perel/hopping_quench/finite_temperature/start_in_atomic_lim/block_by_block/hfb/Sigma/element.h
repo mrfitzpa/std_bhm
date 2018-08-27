@@ -25,6 +25,19 @@ FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_SIGMA_ELEMENT_H
 
 namespace std_bhm
 {
+
+
+
+namespace atomic_lim
+{
+namespace local
+{
+class params; // forward declaration
+}
+}
+
+
+
 namespace bhm_2hs_2pi
 {
 namespace konstantinov_and_perel
@@ -39,29 +52,44 @@ namespace block_by_block
 {
 namespace hfb
 {
-namespace Sigma
+
+
+
+namespace Y
 {
-
-
-
-namespace element_ctor_args_detail
+namespace element_detail
 {
-class element_ctor_args; // forward declaration
+class element; // forward declaration
+}
+}
+
+namespace Z
+{
+class element; // forward declaration
 }
 
 
 
+namespace Sigma
+{
 namespace element_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb::Sigma::element_ctor_args_detail;
+namespace NSA3 = NSA2::hfb;
+
+namespace NSA5 = NSA3::Y::element_detail;
+namespace NSA6 = NSA3::Z;
+
+using local_params = std_bhm::atomic_lim::local::params;
 
 class element
 {
 public:
-    element(const NSA3::element_ctor_args& s_element_ctor_args);
+    element(const NSA5::element& Y_element,
+	    const NSA6::element& Z_element,
+	    const local_params& l_params);
 
     double eval(int l1, int l2) const;
 

@@ -13,6 +13,13 @@ beta="10.0"
 mu="0.42"
 max_band_index="100"
 
+jf="0.03"
+tc="5.0"
+tau_Q="0.1"
+
+L="50"
+k_ints="5 2 1"
+
 n_block_steps="2000"
 ds="0.05"
 
@@ -30,6 +37,11 @@ time "$exe_path" <<EOF
 ${beta}
 ${mu}
 ${max_band_index}
+${jf}
+${tc}
+${tau_Q}
+${L}
+${k_ints}
 ${n_block_steps}
 ${ds}
 ${l1}

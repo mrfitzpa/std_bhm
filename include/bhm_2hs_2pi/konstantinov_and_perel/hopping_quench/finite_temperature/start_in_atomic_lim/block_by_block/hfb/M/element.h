@@ -39,31 +39,46 @@ namespace block_by_block
 {
 namespace hfb
 {
-namespace M
+
+
+
+namespace X
 {
-
-
-
-namespace element_ctor_args_detail
+namespace element_detail
 {
-class element_ctor_args; // forward declaration
+class element; // forward declaration
+}
+}
+
+namespace Sigma
+{
+namespace element_detail
+{
+class element; // forward declaration
+}
 }
 
 
 
+namespace M
+{
 namespace element_detail
 {
 
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb::M::element_ctor_args_detail;
+namespace NSA3 = NSA2::hfb;
+
+namespace NSA4 = NSA3::X::element_detail;
+namespace NSA5 = NSA3::Sigma::element_detail;
 
 using cmplx_dbl = std::complex<double>;
 
 class element
 {
 public:
-    element(const NSA3::element_ctor_args& m_element_ctor_args);
+    element(const NSA4::element& X_element,
+	    const NSA5::element& Sigma_element);
 
     cmplx_dbl eval(int l1, int l2, int l3) const;
 

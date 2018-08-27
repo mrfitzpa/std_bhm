@@ -13,6 +13,7 @@ FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_SIGMA_SET_H
 FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_SIGMA_SET_H
 
 /* Include standard libraries */
+#include <vector>
 #include <memory>
 
 /* Non-standard third-party libraries */
@@ -38,15 +39,23 @@ namespace block_by_block
 {
 namespace hfb
 {
+
+
+
+namespace k_eqn
+{
+namespace params_detail
+{
+class params; // forward declaration
+}
+}
+
+
+
 namespace Sigma
 {
 
 
-
-namespace set_ctor_args_detail
-{
-class set_ctor_args; // forward declaration
-}
 
 namespace element_detail
 {
@@ -62,13 +71,15 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-namespace NSA4 = NSA3::set_ctor_args_detail;
+namespace NSA4 = NSA2::hfb::k_eqn::params_detail;
 namespace NSA5 = NSA3::element_detail;
+
+using dbl_vec = std::vector<double>;
 
 class set
 {
 public:
-    set(const NSA4::set_ctor_args& s_set_ctor_args);
+    set(const NSA4::params& k_eqn_params, const dbl_vec& n_array);
 
     const NSA5::element& get_rho_rho_1() const;
     const NSA5::element& get_rho_rho_2() const;

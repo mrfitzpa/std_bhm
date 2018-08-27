@@ -21,11 +21,12 @@
 start_in_atomic_lim/block_by_block/hfb/X/K_rho.h"
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/X/element.h"
-#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/X/element_params.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
+start_in_atomic_lim/block_by_block/hfb/k_eqn/params.h"
+
+#include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
+start_in_atomic_lim/block_by_block/hfb/step_params.h"
 
 #include "atomic_lim/local/params.h"
 #include "atomic_lim/equilibrium/finite_temperature/local/kinetic_propagator.h"
@@ -35,15 +36,16 @@ start_in_atomic_lim/block_by_block/hfb/array_gen_params.h"
 // Partial definition of impl class.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA3 = NSA2::hfb::X;
+
+namespace NSA4 = NSA2::hfb::k_eqn;
 
 using cmplx_dbl = std::complex<double>;
 using cmplx_vec = std::vector<cmplx_dbl>;
 
-struct NSA4::K_rho::impl
+struct NSA3::K_rho::impl
 {
-    impl(const ::NSA4::element_params& x_element_params);
+    impl(const ::NSA4::params& k_eqn_params, double step_offset);
 
     const int Ns;
     const cmplx_vec array_rep;
@@ -56,8 +58,9 @@ struct NSA4::K_rho::impl
 // unnamed namespace.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA3 = NSA2::hfb::X;
+
+namespace NSA4 = NSA2::hfb::k_eqn;
 
 using cmplx_dbl = std::complex<double>;
 using cmplx_vec = std::vector<cmplx_dbl>;
@@ -67,8 +70,10 @@ namespace unnamed
 namespace
 {
 
-int get_Ns(const ::NSA4::element_params& x_element_params);
-const cmplx_vec gen_array(const ::NSA4::element_params& x_element_params);
+int get_Ns(const ::NSA4::params& k_eqn_params);
+
+const cmplx_vec gen_array(const ::NSA4::params& k_eqn_params,
+			  double step_offset);
 
 } // end of true unnamed namespace
 } // end of 'phony' unnamed namespace
@@ -78,11 +83,12 @@ const cmplx_vec gen_array(const ::NSA4::element_params& x_element_params);
 // K_rho constructor.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA3 = NSA2::hfb::X;
 
-NSA4::K_rho::K_rho(const ::NSA4::element_params& x_element_params)
-    : pimpl{ spimpl::make_impl<impl>(x_element_params) }
+namespace NSA4 = NSA2::hfb::k_eqn;
+
+NSA3::K_rho::K_rho(const ::NSA4::params& k_eqn_params, double step_offset)
+    : pimpl{ spimpl::make_impl<impl>(k_eqn_params, step_offset) }
 {}
 
 
@@ -90,12 +96,13 @@ NSA4::K_rho::K_rho(const ::NSA4::element_params& x_element_params)
 // K_rho::impl constructor.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA3 = NSA2::hfb::X;
 
-NSA4::K_rho::impl::impl(const ::NSA4::element_params& x_element_params)
-    : Ns{ ::unnamed::get_Ns(x_element_params) },
-      array_rep( ::unnamed::gen_array(x_element_params) )
+namespace NSA4 = NSA2::hfb::k_eqn;
+
+NSA3::K_rho::impl::impl(const ::NSA4::params& k_eqn_params, double step_offset)
+    : Ns{ ::unnamed::get_Ns(k_eqn_params) },
+      array_rep( ::unnamed::gen_array(k_eqn_params, step_offset) )
 {}
 
 
@@ -103,18 +110,22 @@ NSA4::K_rho::impl::impl(const ::NSA4::element_params& x_element_params)
 // Extract 'Ns' from the X-parameters
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA3 = NSA2::hfb::X;
+
+namespace NSA4 = NSA2::hfb::k_eqn;
 
 namespace unnamed
 {
 namespace
 {
 
-int get_Ns(const ::NSA4::element_params& x_element_params)
+int get_Ns(const ::NSA4::params& k_eqn_params)
 {
-    const auto& ag_params = x_element_params.get_array_gen_params();
-    const auto Ns = ag_params.get_Ns();
+    const auto& s_params = k_eqn_params.get_step_params();
+
+    const auto n_block_steps = s_params.get_n_block_steps();
+    const auto Ns = 2 * (n_block_steps + 1);
+    auto array_rep = cmplx_vec(Ns);
 
     return Ns;
 }
@@ -127,9 +138,9 @@ int get_Ns(const ::NSA4::element_params& x_element_params)
 // Generate array representation.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA3 = NSA2::hfb::X;
 
+namespace NSA4 = NSA2::hfb::k_eqn;
 namespace NSA5 = std_bhm::atomic_lim::equilibrium::finite_temperature::local;
 
 using cmplx_dbl = std::complex<double>;
@@ -140,18 +151,19 @@ namespace unnamed
 namespace
 {
 
-const cmplx_vec gen_array(const ::NSA4::element_params& x_element_params)
+const cmplx_vec gen_array(const ::NSA4::params& k_eqn_params,
+			  double step_offset)
 {
-    const auto& l_params = x_element_params.get_local_params();
+    const auto& l_params = k_eqn_params.get_local_params();
     const auto kinetic_propagator = ::NSA5::kinetic_propagator(l_params);
 
-    const auto& ag_params = x_element_params.get_array_gen_params();
-    const auto ds = ag_params.get_ds();
-    const auto step_offset = ag_params.get_step_offset();
+    const auto& s_params = k_eqn_params.get_step_params();
+    const auto ds = s_params.get_ds();
     const auto s_offset = step_offset * ds;
     const auto i_ds = cmplx_dbl(0, ds);
     
-    const auto Ns = ag_params.get_Ns();
+    const auto n_block_steps = s_params.get_n_block_steps();
+    const auto Ns = 2 * (n_block_steps + 1);
     const auto two_Ns = 2 * Ns;
     auto array_rep = cmplx_vec(two_Ns);
 
@@ -172,10 +184,11 @@ const cmplx_vec gen_array(const ::NSA4::element_params& x_element_params)
 // Evaluate X_K_rho.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::X;
+namespace NSA3 = NSA2::hfb::X;
 
-cmplx_dbl NSA4::K_rho::do_eval(int l1, int l2, int l3) const
+namespace NSA4 = NSA2::hfb::k_eqn;
+
+cmplx_dbl NSA3::K_rho::do_eval(int l1, int l2, int l3) const
 {
     const auto index = l2 - l1 - l3 + pimpl->Ns;
     return pimpl->array_rep[index];

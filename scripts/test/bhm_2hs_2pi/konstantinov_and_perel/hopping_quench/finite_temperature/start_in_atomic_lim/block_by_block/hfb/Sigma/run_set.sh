@@ -33,8 +33,6 @@ exe_dir=${script_dir/\/scripts\//\/bin\/}
 exe_path=$exe_dir\/set
 
 time "$exe_path" <<EOF
-${n_block_steps}
-${ds}
 ${beta}
 ${mu}
 ${max_band_index}
@@ -43,6 +41,8 @@ ${tc}
 ${tau_Q}
 ${L}
 ${k_ints}
+${n_block_steps}
+${ds}
 ${n_block_steps}
 ${ds}
 ${l1}
