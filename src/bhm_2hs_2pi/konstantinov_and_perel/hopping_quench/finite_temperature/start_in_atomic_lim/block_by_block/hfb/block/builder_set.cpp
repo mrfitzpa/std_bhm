@@ -56,7 +56,7 @@ struct NSA4::builder_set::impl
 	 const ::NSA5::params& k_eqn_params,
 	 const dbl_vec& n_array);
 
-    const int n_block_steps;
+    const int window_index;
     ::NSA3::soln_arrays soln;
     const ::NSA6::set g_set;
     const ::NSA7::set M_set;
@@ -80,7 +80,7 @@ namespace unnamed
 namespace
 {
 
-int get_n_block_steps(const ::NSA5::params& k_eqn_params);
+int get_window_index(const ::NSA5::params& k_eqn_params);
 
 } // end of true unnamed namespace
 } // end of 'phony' unnamed namespace
@@ -114,7 +114,7 @@ namespace NSA5 = NSA3::k_eqn;
 NSA4::builder_set::impl::impl(const ::NSA3::soln_arrays& soln,
 			      const ::NSA5::params& k_eqn_params,
 			      const dbl_vec& n_array)
-    : n_block_steps{ ::unnamed::get_n_block_steps(k_eqn_params) },
+    : window_index{ ::unnamed::get_window_index(k_eqn_params) },
       soln{soln},
       g_set{k_eqn_params},
       M_set{k_eqn_params, n_array},
@@ -123,7 +123,7 @@ NSA4::builder_set::impl::impl(const ::NSA3::soln_arrays& soln,
 
 
 
-// Get # of block steps.
+// Get window index (m_W) from k-eqn parameters.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
@@ -136,12 +136,12 @@ namespace unnamed
 namespace
 {
 
-int get_n_block_steps(const ::NSA5::params& k_eqn_params)
+int get_window_index(const ::NSA5::params& k_eqn_params)
 {
     const auto& s_params = k_eqn_params.get_step_params();
-    const auto n_block_steps = s_params.get_n_block_steps();
+    const auto window_index = s_params.get_window_index();
 
-    return n_block_steps;
+    return window_index;
 }
 
 } // end of true unnamed namespace
@@ -149,15 +149,15 @@ int get_n_block_steps(const ::NSA5::params& k_eqn_params)
 
 
 
-// Get # of block steps.
+// Get window index (m_W).
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::block;
 
-int NSA4::builder_set::get_n_block_steps() const
+int NSA4::builder_set::get_window_index() const
 {
-    return pimpl->n_block_steps;
+    return pimpl->window_index;
 }
 
 

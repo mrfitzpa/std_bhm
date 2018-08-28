@@ -1,5 +1,6 @@
 // std_bhm/include/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/step_params.h
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/block
+// /C/mat.h
 
 // -----------------------------------------------------------------------
 
@@ -8,15 +9,15 @@
 // -----------------------------------------------------------------------
 
 #ifndef STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_STEP_PARAMS_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_BLOCK_C_MAT_H
 #define STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_STEP_PARAMS_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_BLOCK_C_MAT_H
 
 /* Include standard libraries */
-#include <memory>
+#include <vector>
+#include <complex>
 
 /* Non-standard third-party libraries */
-#include "third_party/spimpl.h"
 
 /* Include user-defined header files */
 
@@ -38,22 +39,41 @@ namespace block_by_block
 {
 namespace hfb
 {
+namespace block
+{
+namespace C
+{
+namespace mat_detail
+{
 
-class step_params
+using cmplx_dbl = std::complex<double>;
+using cmplx_vec = std::vector<cmplx_dbl>;
+
+class mat
 {
 public:
-    step_params(int n_block_steps, double ds);
-    step_params(int n_block_steps, double ds, int window_index);
+    mat();
+    virtual ~mat();
 
-    int get_n_block_steps() const;
-    double get_ds() const;
-    int get_window_index() const;
+    cmplx_vec eval(int m1, int m2) const;
 
 private:
-    class impl;
-    spimpl::impl_ptr<impl> pimpl;
+    virtual cmplx_vec do_eval(int m1, int m2) const = 0;
 };
 
+} // end of mat_detail namespace
+
+
+
+// lift relevant classes and functions up one namespace
+using std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench::\
+finite_temperature::start_in_atomic_lim::block_by_block::hfb::block::\
+C::mat_detail::mat;
+
+
+
+} // end of C namespace
+} // end of block namespace
 } // end of hfb namespace
 } // end of block_by_block namespace
 } // end of start_in_atomic_lim namespace

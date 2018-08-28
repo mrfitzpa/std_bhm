@@ -106,7 +106,7 @@ public:
 		const NSA5::params& k_eqn_params,
 		const dbl_vec& n_array);
 
-    int get_n_block_steps() const;
+    int get_window_index() const;
     NSA4::soln_arrays& get_soln_arrays() const;
     const NSA6::set& get_g_set() const;
     const NSA7::set& get_M_set() const;
