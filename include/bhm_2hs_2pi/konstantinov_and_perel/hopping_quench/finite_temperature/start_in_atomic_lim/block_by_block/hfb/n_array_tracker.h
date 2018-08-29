@@ -1,5 +1,6 @@
 // std_bhm/include/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
-// /finite_temperature/start_in_atomic_lim/block_by_block/hfb/k_eqn/alg.h
+// /finite_temperature/start_in_atomic_lim/block_by_block/hfb
+// /n_array_tracker.h
 
 // -----------------------------------------------------------------------
 
@@ -8,9 +9,9 @@
 // -----------------------------------------------------------------------
 
 #ifndef STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_K_EQN_ALG_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_N_ARRAY_TRACKER_H
 #define STD_BHM_BHM_2HS_2PI_KONSTANTINOV_AND_PEREL_HOPPING_QUENCH_\
-FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_K_EQN_ALG_H
+FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_N_ARRAY_TRACKER_H
 
 /* Include standard libraries */
 #include <vector>
@@ -25,6 +26,19 @@ FINITE_TEMPERATURE_START_IN_ATOMIC_LIM_BLOCK_BY_BLOCK_HFB_K_EQN_ALG_H
 
 namespace std_bhm
 {
+
+
+
+namespace atomic_lim
+{
+namespace local
+{
+class params; // forward declaration
+}
+}
+
+
+
 namespace bhm_2hs_2pi
 {
 namespace konstantinov_and_perel
@@ -39,39 +53,25 @@ namespace block_by_block
 {
 namespace hfb
 {
-namespace k_eqn
+namespace n_array_tracker_detail
 {
-
-
-
-namespace params_detail
-{
-class params; // forward declaration
-}
-
-
-
-namespace alg_detail
-{
-
-
-
-namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
-namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb::k_eqn::params_detail;
 
 using dbl_vec = std::vector<double>;
+using local_params = std_bhm::atomic_lim::local::params;
 
-class alg
+class n_array_tracker
 {
 public:
-    alg(const NSA3::params& k_eqn_params, const dbl_vec& n_array);
+    n_array_tracker(int n_block_steps,
+		    const local_params& l_params,
+		    double tol);
 
-    void step_evolve();
-    void reiterate_step();
+    void guess_next_step_by_extrapolation();
+    void update_current_step(double new_estimate);
 
-    double get_current_step_n_k_estimate() const;
-    const dbl_vec& get_n_k_array() const;
+    bool get_convergence_status() const;
+    int get_number_of_updates() const;
+    const dbl_vec& get_n_array() const;
 
  private:
     class impl;
@@ -80,18 +80,17 @@ public:
 
 
 
-} // end of alg_detail namespace
+} // end of n_array_tracker_detail namespace
 
 
 
 // lift relevant classes and functions up one namespace
 using std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench::\
-finite_temperature::start_in_atomic_lim::block_by_block::hfb::k_eqn::\
-alg_detail::alg;
+finite_temperature::start_in_atomic_lim::block_by_block::hfb::\
+n_array_tracker_detail::n_array_tracker;
 
 
 
-} // end of k_eqn namespace
 } // end of hfb namespace
 } // end of block_by_block namespace
 } // end of start_in_atomic_lim namespace
