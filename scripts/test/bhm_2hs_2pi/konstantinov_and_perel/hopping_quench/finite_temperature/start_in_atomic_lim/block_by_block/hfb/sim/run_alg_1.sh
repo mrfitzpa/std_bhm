@@ -33,7 +33,7 @@ tol="1.0e-12"
 # the absolute path of this script and then modifying it accordingly.
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 exe_dir=${script_dir/\/scripts\//\/bin\/}
-exe_path=$exe_dir\/main_alg
+exe_path=$exe_dir\/alg_1
 
 time "$exe_path" <<EOF
 ${beta}
