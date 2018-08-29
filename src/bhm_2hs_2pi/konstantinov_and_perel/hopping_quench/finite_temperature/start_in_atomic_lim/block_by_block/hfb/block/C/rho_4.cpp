@@ -1,6 +1,6 @@
 // /std_bhm/src/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench
 // /finite_temperature/start_in_atomic_lim/block_by_block/hfb/block
-// /C/rho_1.cpp
+// /C/rho_4.cpp
 
 // -----------------------------------------------------------------------
 
@@ -19,7 +19,7 @@
 
 /* Include user-defined header files */
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
-start_in_atomic_lim/block_by_block/hfb/block/C/rho_1.h"
+start_in_atomic_lim/block_by_block/hfb/block/C/rho_4.h"
 
 #include "bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/\
 start_in_atomic_lim/block_by_block/hfb/block/builder_set.h"
@@ -40,24 +40,24 @@ namespace NSA5 = NSA4::C;
 
 namespace NSA6 = NSA3::M;
 
-struct NSA5::rho_1::impl
+struct NSA5::rho_4::impl
 {
     impl(const ::NSA4::builder_set& block_builder_set);
 
     const ::NSA6::element& M_rho_rho_1;
-    const ::NSA6::element& M_rho_rho_2;
+    const ::NSA6::element& M_rho_rho_3;
 };
 
 
 
-// rho_1 constructor.
+// rho_4 constructor.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::block;
 namespace NSA5 = NSA4::C;
 
-NSA5::rho_1::rho_1(const ::NSA4::builder_set& block_builder_set)
+NSA5::rho_4::rho_4(const ::NSA4::builder_set& block_builder_set)
     : pimpl{ spimpl::make_impl<impl>(block_builder_set) }
 {}
 
@@ -70,9 +70,9 @@ namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::block;
 namespace NSA5 = NSA4::C;
 
-NSA5::rho_1::impl::impl(const ::NSA4::builder_set& block_builder_set)
+NSA5::rho_4::impl::impl(const ::NSA4::builder_set& block_builder_set)
     : M_rho_rho_1{ ( block_builder_set.get_M_set() ).get_rho_rho_1() },
-      M_rho_rho_2{ ( block_builder_set.get_M_set() ).get_rho_rho_2() }
+      M_rho_rho_3{ ( block_builder_set.get_M_set() ).get_rho_rho_3() }
 {}
 
 
@@ -87,19 +87,19 @@ namespace NSA5 = NSA4::C;
 using cmplx_dbl = std::complex<double>;
 using cmplx_vec = std::vector<cmplx_dbl>;
 
-cmplx_vec NSA5::rho_1::do_eval(int m1, int m2) const
+cmplx_vec NSA5::rho_4::do_eval(int m1, int m2) const
 {
     const auto& M_rho_rho_1 = pimpl->M_rho_rho_1;
-    const auto& M_rho_rho_2 = pimpl->M_rho_rho_2;
+    const auto& M_rho_rho_3 = pimpl->M_rho_rho_3;
     
-    auto C_rho_1 = cmplx_vec(4);
+    auto C_rho_4 = cmplx_vec(4);
 
-    C_rho_1[0] = M_rho_rho_1.eval(2*m1, 2*m2, 2*m1) / 3.0;
-    C_rho_1[1] = 0.0;
-    C_rho_1[2] = (M_rho_rho_1.eval(2*m1+1, 2*m2, 2*m1) / 2.0
-		  + M_rho_rho_2.eval(2*m1+1, 2*m2, 2*m1) / 2.0);
-    C_rho_1[3] = (M_rho_rho_1.eval(2*m1+1, 2*m2, 2*m1+1) / 6.0
-		  + M_rho_rho_2.eval(2*m1+1, 2*m2, 2*m1) / 4.0);
+    C_rho_4[0] = M_rho_rho_1.eval(2*m1, 2*m2+1, 2*m1) / 3.0;
+    C_rho_4[1] = 0.0;
+    C_rho_4[2] = (M_rho_rho_1.eval(2*m1+1, 2*m2+1, 2*m1) / 2.0
+		  + M_rho_rho_3.eval(2*m1+1, 2*m2+1, 2*m1) / 2.0);
+    C_rho_4[3] = (M_rho_rho_1.eval(2*m1+1, 2*m2+1, 2*m1+1) / 6.0
+		  + M_rho_rho_3.eval(2*m1+1, 2*m2+1, 2*m1) / 4.0);
     
-    return C_rho_1;
+    return C_rho_4;
 }
