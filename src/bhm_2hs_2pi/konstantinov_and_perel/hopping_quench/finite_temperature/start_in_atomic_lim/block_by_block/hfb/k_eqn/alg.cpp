@@ -57,8 +57,7 @@ struct NSA4::alg::impl
 
     int count;
     
-    cmplx_vec y_rho;
-    cmplx_vec y_K;
+    ::NSA3::soln_arrays soln;
 
     const dbl_vec& n_array;
     dbl_vec n_k_array;
@@ -91,14 +90,16 @@ namespace NSA4 = NSA3::k_eqn;
 
 namespace NSA6 = std_bhm::atomic_lim::equilibrium::finite_temperature::local;
 
+using cmplx_dbl = std::complex<double>;
+using cmplx_vec = std::vector<cmplx_dbl>;
+
 NSA4::alg::impl::impl(const ::NSA4::params& k_eqn_params,
 		      const dbl_vec& n_array)
     : count{-1},
-      y_rho( n_array.size() ),
-      y_K( n_array.size() ),
+      soln{ ( k_eqn_params.get_step_params() ).get_n_block_steps() },
       n_array(n_array),
       n_k_array(n_array),
-      builder_set{::NSA3::soln_arrays{y_rho, y_K}, k_eqn_params, n_array},
+      builder_set{soln, k_eqn_params, n_array},
       y_rho_alg{builder_set},
       y_K_alg{builder_set}
 {}
@@ -118,10 +119,10 @@ void NSA4::alg::step_evolve()
     const auto index = pimpl->count + 2;
     const auto I = cmplx_dbl(0.0, 1.0);
 
-    if (pimpl->count != 1)
+    if (index != 1)
     {
-	pimpl->n_k_array[index]
-	    = std::real( 0.5 * (I * pimpl->y_K[index] - 1.0) );
+	const auto& y_K = pimpl->soln.get_y_K();
+	pimpl->n_k_array[index] = std::real( 0.5 * (I * y_K[index] - 1.0) );
     }
 
     pimpl->count = pimpl->count + 1;
@@ -159,8 +160,9 @@ double NSA4::alg::get_current_step_n_k_estimate() const
 {
     const auto index = pimpl->count + 2;
     const auto I = cmplx_dbl(0.0, 1.0);
+    const auto& y_K = pimpl->soln.get_y_K();
 
-    return std::real( 0.5 * (I * pimpl->y_K[index] - 1.0) );
+    return std::real( 0.5 * (I * y_K[index] - 1.0) );
 }
 
 
@@ -175,5 +177,13 @@ using dbl_vec = std::vector<double>;;
 
 const dbl_vec& NSA4::alg::get_n_k_array() const
 {
-    return pimpl->n_k_array;
+    const auto index = pimpl->count + 2;
+    const auto I = cmplx_dbl(0.0, 1.0);
+    
+    const auto& y_K = pimpl->soln.get_y_K();
+    auto& n_k_array = pimpl->n_k_array;
+    
+    n_k_array[index] = std::real( 0.5 * (I * y_K[index] - 1.0) );
+    
+    return n_k_array;
 }

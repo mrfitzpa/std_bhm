@@ -224,12 +224,12 @@ void NSA3::y_rho_eqn_alg::impl::solve_block_systems_3_and_4()
 
     for(auto m1=decltype(mL){0}; m1<mL; m1++)
     {
-	const auto soln = block_system_1.solve(m1, m2);
+	const auto soln = block_system_3.solve(m1, m2);
 	y_rho[2*m1] = soln[0];
 	y_rho[2*m1+1] = soln[1];
     }
 
-    const auto soln = block_system_2.solve(mL, m2);
+    const auto soln = block_system_4.solve(mL, m2);
     y_rho[2*mL] = soln[0];
     y_rho[2*mL+1] = soln[1];
 }

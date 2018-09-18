@@ -44,7 +44,7 @@ struct NSA5::K_2::impl
 {
     impl(const ::NSA4::builder_set& block_builder_set);
 
-    const ::NSA6::element& M_rho_K_4;
+    const ::NSA6::element M_rho_K_4;
 };
 
 
@@ -89,7 +89,7 @@ cmplx_vec NSA5::K_2::do_eval(int m1, int m2) const
 {
     const auto& M_rho_K_4 = pimpl->M_rho_K_4;
     
-    auto C_K_2 = cmplx_vec(0);
+    auto C_K_2 = cmplx_vec(1);
 
     C_K_2[0] = M_rho_K_4.eval(2*m1, 2*m2, 2*m1) / 3.0;
     

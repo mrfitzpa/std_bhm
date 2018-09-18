@@ -14,6 +14,8 @@
 #include <complex>
 #include <memory>
 
+#include <iostream>
+
 /* Non-standard third-party libraries */
 #include "third_party/spimpl.h"
 

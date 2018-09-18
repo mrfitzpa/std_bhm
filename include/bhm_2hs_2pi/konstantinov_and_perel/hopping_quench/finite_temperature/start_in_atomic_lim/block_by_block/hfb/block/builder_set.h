@@ -102,7 +102,7 @@ using dbl_vec = std::vector<double>;
 class builder_set
 {
 public:
-    builder_set(const NSA4::soln_arrays& soln,
+    builder_set(NSA4::soln_arrays& soln,
 		const NSA5::params& k_eqn_params,
 		const dbl_vec& n_array);
 
@@ -110,7 +110,7 @@ public:
     NSA4::soln_arrays& get_soln_arrays() const;
     const NSA6::set& get_g_set() const;
     const NSA7::set& get_M_set() const;
-    const NSA8::set& get_simp_quad_set() const;
+    const NSA8::set get_simp_quad_set() const;
 
 private:
     class impl;

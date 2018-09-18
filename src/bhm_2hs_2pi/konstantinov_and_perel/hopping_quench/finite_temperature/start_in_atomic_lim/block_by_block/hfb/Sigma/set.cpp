@@ -139,7 +139,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_rho_rho_1() const
+const NSA3::element NSA3::set::get_rho_rho_1() const
 {
     return pimpl->Sigma_rho_rho_1;
 }
@@ -151,7 +151,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_rho_rho_2() const
+const NSA3::element NSA3::set::get_rho_rho_2() const
 {
     return pimpl->Sigma_rho_rho_2;
 }
@@ -163,7 +163,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_rho_rho_3() const
+const NSA3::element NSA3::set::get_rho_rho_3() const
 {
     return pimpl->Sigma_rho_rho_3;
 }
@@ -175,7 +175,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_rho_K_4() const
+const NSA3::element NSA3::set::get_rho_K_4() const
 {
     return pimpl->Sigma_rho_K_4;
 }
@@ -187,7 +187,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_rho_K_5() const
+const NSA3::element NSA3::set::get_rho_K_5() const
 {
     return pimpl->Sigma_rho_K_5;
 }
@@ -199,7 +199,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_rho_K_6() const
+const NSA3::element NSA3::set::get_rho_K_6() const
 {
     return pimpl->Sigma_rho_K_6;
 }
@@ -211,7 +211,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_K_rho_1() const
+const NSA3::element NSA3::set::get_K_rho_1() const
 {
     return pimpl->Sigma_K_rho_1;
 }
@@ -223,7 +223,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_K_rho_2() const
+const NSA3::element NSA3::set::get_K_rho_2() const
 {
     return pimpl->Sigma_K_rho_2;
 }
@@ -235,7 +235,7 @@ namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb::Sigma;
 
-const NSA3::element& NSA3::set::get_K_rho_3() const
+const NSA3::element NSA3::set::get_K_rho_3() const
 {
     return pimpl->Sigma_K_rho_3;
 }

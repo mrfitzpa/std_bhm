@@ -81,17 +81,17 @@ class set
 public:
     set(const NSA4::params& k_eqn_params, const dbl_vec& n_array);
 
-    const NSA5::element& get_rho_rho_1() const;
-    const NSA5::element& get_rho_rho_2() const;
-    const NSA5::element& get_rho_rho_3() const;
+    const NSA5::element get_rho_rho_1() const;
+    const NSA5::element get_rho_rho_2() const;
+    const NSA5::element get_rho_rho_3() const;
 
-    const NSA5::element& get_rho_K_4() const;
-    const NSA5::element& get_rho_K_5() const;
-    const NSA5::element& get_rho_K_6() const;
+    const NSA5::element get_rho_K_4() const;
+    const NSA5::element get_rho_K_5() const;
+    const NSA5::element get_rho_K_6() const;
 
-    const NSA5::element& get_K_rho_1() const;
-    const NSA5::element& get_K_rho_2() const;
-    const NSA5::element& get_K_rho_3() const;
+    const NSA5::element get_K_rho_1() const;
+    const NSA5::element get_K_rho_2() const;
+    const NSA5::element get_K_rho_3() const;
 
 private:
     class impl;

@@ -67,13 +67,13 @@ struct NSA5::K_3::impl
 
     const ::NSA6::element& g_K;
     
-    const ::NSA7::element& M_rho_K_4;
-    const ::NSA7::element& M_rho_K_5;
-    const ::NSA7::element& M_K_rho_1;
-    const ::NSA7::element& M_K_rho_3;
+    const ::NSA7::element M_rho_K_4;
+    const ::NSA7::element M_rho_K_5;
+    const ::NSA7::element M_K_rho_1;
+    const ::NSA7::element M_K_rho_3;
 
-    const ::NSA8::element& simp_quad_rho_K;
-    const ::NSA8::element& simp_quad_K_rho;
+    const ::NSA8::element simp_quad_rho_K;
+    const ::NSA8::element simp_quad_K_rho;
 
     const cmplx_vec& y_rho;
     const cmplx_vec& y_K;
@@ -111,10 +111,8 @@ NSA5::K_3::impl::impl(const ::NSA4::builder_set& block_builder_set)
       M_rho_K_5{ ( block_builder_set.get_M_set() ).get_rho_K_5() },
       M_K_rho_1{ ( block_builder_set.get_M_set() ).get_K_rho_1() },
       M_K_rho_3{ ( block_builder_set.get_M_set() ).get_K_rho_3() },
-      simp_quad_rho_K{
-	  ( block_builder_set.get_simp_quad_set() ).get_rho_K() },
-      simp_quad_K_rho{
-	  ( block_builder_set.get_simp_quad_set() ).get_K_rho() },
+      simp_quad_rho_K{ ( block_builder_set.get_simp_quad_set() ).get_rho_K() },
+      simp_quad_K_rho{ ( block_builder_set.get_simp_quad_set() ).get_K_rho() },
       y_rho{ ( block_builder_set.get_soln_arrays() ).get_y_rho() },
       y_K{ ( block_builder_set.get_soln_arrays() ).get_y_K() }
 {}
@@ -143,7 +141,7 @@ cmplx_vec NSA5::K_3::do_eval(int m1, int m2) const
 
 
 
-// Evaluate second component of the b-vector.
+// Evaluate first component of the b-vector.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
@@ -155,22 +153,30 @@ using cmplx_dbl = std::complex<double>;
 cmplx_dbl NSA5::K_3::impl::eval_first_component(int m1, int m2) const
 {
     const auto mL = std::min(window_index, m2);
+
+    auto result = cmplx_dbl{};
+
+    result = ( g_K.eval(2*m1, 2*m2+1)
+	       + simp_quad_rho_K.eval(2*(m2-mL), m1-m2+mL-1, 2*m1, 2*m2+1)
+	       + simp_quad_K_rho.eval(0, mL, 2*m1, 2*m2+1)
+	       + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1, 2*m2+1, 2*mL)
+				 * y_rho[2*mL] )
+	       + (2.0 / 3.0) * ( M_K_rho_3.eval(2*m1, 2*m2+1, 2*mL)
+				 * ( -(1.0 / 8.0) * y_rho[2*mL-1]
+				     + (3.0 / 4.0) * y_rho[2*mL]
+				     + (3.0 / 8.0) * y_rho[2*mL+1] ) )
+	       + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1, 2*m2+1, 2*mL+1)
+				 * y_rho[2*mL+1] ) );
+
+    if (m1 != 0)
+    {
+	result += ( (1.0 / 3.0) * ( M_rho_K_4.eval(2*m1, 2*m2+1, 2*m1-2)
+				    * y_K[2*m1-2] )
+		    + (4.0 / 3.0) * ( M_rho_K_4.eval(2*m1, 2*m2+1, 2*m1-1)
+				      * y_K[2*m1-1] ) );
+    }
     
-    return (g_K.eval(2*m1, 2*m2+1)
-	    + simp_quad_rho_K.eval(2*(m2-mL), m1-m2+mL-1, 2*m1, 2*m2+1)
-	    + (1.0 / 3.0) * ( M_rho_K_4.eval(2*m1, 2*m2+1, 2*m1-2)
-			      * y_K[2*m1-2] )
-	    + (4.0 / 3.0) * ( M_rho_K_4.eval(2*m1, 2*m2+1, 2*m1-1)
-			      * y_K[2*m1-1] )
-	    + simp_quad_K_rho.eval(0, mL, 2*m1, 2*m2+1)
-	    + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1, 2*m2+1, 2*mL)
-			      * y_rho[2*mL] )
-	    + (2.0 / 3.0) * ( M_K_rho_3.eval(2*m1, 2*m2+1, 2*mL)
-			      * ( -(1.0 / 8.0) * y_rho[2*mL-1]
-				  + (3.0 / 4.0) * y_rho[2*mL]
-				  + (3.0 / 8.0) * y_rho[2*mL+1] ) )
-	    + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1, 2*m2+1, 2*mL+1)
-			      * y_rho[2*mL+1] ) );
+    return result;
 }
 
 
@@ -187,22 +193,30 @@ using cmplx_dbl = std::complex<double>;
 cmplx_dbl NSA5::K_3::impl::eval_second_component(int m1, int m2) const
 {
     const auto mL = std::min(window_index, m2);
+
+    auto result = cmplx_dbl{};
+
+    result = ( g_K.eval(2*m1+1, 2*m2+1)
+	       + simp_quad_rho_K.eval(2*(m2-mL), m1-m2+mL-1, 2*m1+1, 2*m2+1)
+	       + simp_quad_K_rho.eval(0, mL, 2*m1+1, 2*m2+1)
+	       + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1+1, 2*m2+1, 2*mL)
+				 * y_rho[2*mL] )
+	       + (2.0 / 3.0) * ( M_K_rho_3.eval(2*m1+1, 2*m2+1, 2*mL)
+				 * ( -(1.0 / 8.0) * y_rho[2*mL-1]
+				     + (3.0 / 4.0) * y_rho[2*mL]
+				     + (3.0 / 8.0) * y_rho[2*mL+1] ) )
+	       + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1+1, 2*m2+1, 2*mL+1)
+				 * y_rho[2*mL+1] )
+	       - (1.0 / 12.0) * ( M_rho_K_5.eval(2*m1+1, 2*m2+1, 2*m1)
+				  * y_K[2*m1-1] ) );
+
+    if (m1 != 0)
+    {
+	result += ( (1.0 / 3.0) * ( M_rho_K_4.eval(2*m1+1, 2*m2+1, 2*m1-2)
+				    * y_K[2*m1-2] )
+		    + (4.0 / 3.0) * ( M_rho_K_4.eval(2*m1+1, 2*m2+1, 2*m1-1)
+				      * y_K[2*m1-1] ) );
+    }
     
-    return (g_K.eval(2*m1+1, 2*m2+1)
-	    + simp_quad_rho_K.eval(2*(m2-mL), m1-m2+mL-1, 2*m1+1, 2*m2+1)
-	    + (1.0 / 3.0) * ( M_rho_K_4.eval(2*m1+1, 2*m2+1, 2*m1-2)
-			      * y_K[2*m1-2] )
-	    + (4.0 / 3.0) * ( M_rho_K_4.eval(2*m1+1, 2*m2+1, 2*m1-1)
-			      * y_K[2*m1-1] )
-	    + simp_quad_K_rho.eval(0, mL, 2*m1+1, 2*m2+1)
-	    + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1+1, 2*m2+1, 2*mL)
-			      * y_rho[2*mL] )
-	    + (2.0 / 3.0) * ( M_K_rho_3.eval(2*m1+1, 2*m2+1, 2*mL)
-			      * ( -(1.0 / 8.0) * y_rho[2*mL-1]
-				  + (3.0 / 4.0) * y_rho[2*mL]
-				  + (3.0 / 8.0) * y_rho[2*mL+1] ) )
-	    + (1.0 / 6.0) * ( M_K_rho_1.eval(2*m1+1, 2*m2+1, 2*mL+1)
-			      * y_rho[2*mL+1] )
-	    - (1.0 / 12.0) * ( M_rho_K_5.eval(2*m1+1, 2*m2+1, 2*m1)
-			      * y_K[2*m1-1] ) );
+    return result;
 }

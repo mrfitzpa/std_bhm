@@ -50,6 +50,7 @@ class soln_arrays
 {
 public:
     soln_arrays(cmplx_vec& y_rho, cmplx_vec& y_K);
+    soln_arrays(int n_block_steps);
 
     cmplx_vec& get_y_rho() const;
     cmplx_vec& get_y_K() const;

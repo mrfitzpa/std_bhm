@@ -44,8 +44,8 @@ struct NSA5::K_4::impl
 {
     impl(const ::NSA4::builder_set& block_builder_set);
 
-    const ::NSA6::element& M_rho_K_4;
-    const ::NSA6::element& M_rho_K_6;
+    const ::NSA6::element M_rho_K_4;
+    const ::NSA6::element M_rho_K_6;
 };
 
 

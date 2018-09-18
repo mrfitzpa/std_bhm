@@ -131,7 +131,7 @@ void NSA4::alg_1()
     auto k_alg_set = ::unnamed::gen_k_eqn_alg_set(sim_params, n_tracker);
 
     ::unnamed::exe_outermost_loop(n_tracker, k_alg_set, sim_params);
-    
+
     const auto n_k_arrays = ::unnamed::gen_n_k_array_set(k_alg_set);
     const auto sp_params = sim_params.get_spatial_params();
     const auto density_matrix = ::NSA7::calc_from_n_k_data(sp_params,
@@ -245,12 +245,12 @@ void exe_outermost_loop(::NSA3::n_array_tracker& n_tracker,
     for(auto m2=decltype(n_block_steps){0}; m2<n_block_steps; m2++)
     {
 	for(decltype(2) sub_step_index=0; sub_step_index<2; sub_step_index++)
-	{   
+	{
 	    ::unnamed::step_evolve(n_tracker,
 				   k_alg_set,
 				   sim_params,
 				   n_duplicates_map);
-	
+
 	    ::unnamed::reiterate_until_convergence(n_tracker,
 						   k_alg_set,
 						   sim_params,
@@ -340,7 +340,9 @@ void step_evolve(::NSA3::n_array_tracker& n_tracker,
 	for(auto i=decltype(n_k_algs){0}; i<n_k_algs; i++)
 	{
 	    auto& k_alg = k_alg_set[i];
+
 	    k_alg.step_evolve();
+
 	    const auto n_duplicates = n_duplicates_map[i];
 	    const auto n_k_estimate = k_alg.get_current_step_n_k_estimate();
 	    mapped_new_n_estimate += (n_duplicates * n_k_estimate) / n_sites;

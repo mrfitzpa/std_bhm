@@ -44,8 +44,8 @@ struct NSA5::rho_1::impl
 {
     impl(const ::NSA4::builder_set& block_builder_set);
 
-    const ::NSA6::element& M_rho_rho_1;
-    const ::NSA6::element& M_rho_rho_2;
+    const ::NSA6::element M_rho_rho_1;
+    const ::NSA6::element M_rho_rho_2;
 };
 
 
@@ -94,7 +94,7 @@ cmplx_vec NSA5::rho_1::do_eval(int m1, int m2) const
     
     auto C_rho_1 = cmplx_vec(4);
 
-    C_rho_1[0] = M_rho_rho_1.eval(2*m1, 2*m2, 2*m1) / 3.0;
+    C_rho_1[0] = (m1 != 0 ? M_rho_rho_1.eval(2*m1, 2*m2, 2*m1) / 3.0 : 0.0);
     C_rho_1[1] = 0.0;
     C_rho_1[2] = (M_rho_rho_1.eval(2*m1+1, 2*m2, 2*m1) / 2.0
 		  + M_rho_rho_2.eval(2*m1+1, 2*m2, 2*m1) / 2.0);

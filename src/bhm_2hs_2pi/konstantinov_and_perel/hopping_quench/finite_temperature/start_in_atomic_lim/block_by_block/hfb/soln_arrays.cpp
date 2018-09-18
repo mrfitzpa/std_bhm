@@ -33,6 +33,7 @@ using cmplx_vec = std::vector<cmplx_dbl>;
 struct NSA3::soln_arrays::impl
 {
     impl(cmplx_vec& y_rho, cmplx_vec& y_K);
+    impl(int n_block_steps);
 
     cmplx_vec y_rho;
     cmplx_vec y_K;
@@ -40,7 +41,7 @@ struct NSA3::soln_arrays::impl
 
 
 
-// soln_arrays constructor.
+// soln_arrays constructor #1.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
@@ -51,13 +52,35 @@ NSA3::soln_arrays::soln_arrays(cmplx_vec& y_rho, cmplx_vec& y_K)
 
 
 
-// soln_arrays::impl constructor.
+// soln_arrays constructor #2.
+namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
+namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
+namespace NSA3 = NSA2::hfb;
+
+NSA3::soln_arrays::soln_arrays(int n_block_steps)
+    : pimpl{ spimpl::make_impl<impl>(n_block_steps) }
+{}
+
+
+
+// soln_arrays::impl constructor #1.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 
 NSA3::soln_arrays::impl::impl(cmplx_vec& y_rho, cmplx_vec& y_K)
     : y_rho(y_rho), y_K(y_K)
+{}
+
+
+
+// soln_arrays::impl constructor #2.
+namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
+namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
+namespace NSA3 = NSA2::hfb;
+
+NSA3::soln_arrays::impl::impl(int n_block_steps)
+    : y_rho( 2 * (n_block_steps + 1) ), y_K( 2 * (n_block_steps + 1) )
 {}
 
 

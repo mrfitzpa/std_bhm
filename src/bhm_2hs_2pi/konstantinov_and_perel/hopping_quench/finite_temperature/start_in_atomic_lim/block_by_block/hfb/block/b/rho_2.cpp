@@ -64,9 +64,9 @@ struct NSA5::rho_2::impl
 
     const ::NSA6::element& g_rho;
     
-    const ::NSA7::element& M_rho_rho_1;
+    const ::NSA7::element M_rho_rho_1;
     
-    const ::NSA8::element& simp_quad_rho_rho;
+    const ::NSA8::element simp_quad_rho_rho;
 
     const cmplx_vec& y_rho;
 };
@@ -122,12 +122,12 @@ cmplx_vec NSA5::rho_2::do_eval(int m1, int m2) const
     
     auto b_rho_2 = cmplx_vec(1);
 
-    b_rho_2[0] = (g_rho.eval(2*m1, 2*m2)
-		  + simp_quad_rho_rho.eval(0, m1-1, 2*m1, 2*m2)
-		  + (1.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-2)
-				    * y_rho[2*m1-2] )
-		  + (4.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-1)
-				    * y_rho[2*m1-1] ) );
+    b_rho_2[0] = ( g_rho.eval(2*m1, 2*m2)
+		   + simp_quad_rho_rho.eval(0, m1-1, 2*m1, 2*m2)
+		   + (1.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-2)
+				     * y_rho[2*m1-2] )
+		   + (4.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-1)
+				     * y_rho[2*m1-1] ) );
     
     return b_rho_2;
 }

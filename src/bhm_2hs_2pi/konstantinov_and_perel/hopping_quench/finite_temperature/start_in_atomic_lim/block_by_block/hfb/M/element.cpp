@@ -41,7 +41,7 @@ struct NSA4::element::impl
 	 const ::NSA6::element& Sigma_element);
 
     const ::NSA5::element& X_element;
-    const ::NSA6::element& Sigma_element;
+    const ::NSA6::element Sigma_element;
 };
 
 

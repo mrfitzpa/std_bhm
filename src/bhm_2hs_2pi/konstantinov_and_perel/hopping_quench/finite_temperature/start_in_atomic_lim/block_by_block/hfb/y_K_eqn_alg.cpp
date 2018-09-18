@@ -224,12 +224,12 @@ void NSA3::y_K_eqn_alg::impl::solve_block_systems_3_and_4()
 
     for(auto m1=decltype(m2){m2-mL}; m1<m2; m1++)
     {
-	const auto soln = block_system_1.solve(m1, m2);
+	const auto soln = block_system_3.solve(m1, m2);
 	y_K[2*m1] = soln[0];
 	y_K[2*m1+1] = soln[1];
     }
 
-    const auto soln = block_system_2.solve(m2, m2);
+    const auto soln = block_system_4.solve(m2, m2);
     y_K[2*m2] = soln[0];
     y_K[2*m2+1] = soln[1];
 }

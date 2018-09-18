@@ -41,7 +41,7 @@ struct NSA4::element::impl
 {
     impl(const ::NSA5::element& M_element, const cmplx_vec& soln_array);
 
-    const ::NSA5::element& M_element;
+    const ::NSA5::element M_element;
     const cmplx_vec& soln_array;
 };
 
@@ -112,7 +112,7 @@ cmplx_dbl NSA4::element::eval(int li, int n_steps, int m1, int m2) const
 	l++;
 	sum += two_thirds * M_element.eval(m1, m2, l) * soln_array[l];
     }
-    
+
     l++;
     sum += four_thirds * M_element.eval(m1, m2, l) * soln_array[l];
     l++;

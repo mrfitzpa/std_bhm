@@ -114,7 +114,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_rho_rho_1() const
+const NSA4::element NSA4::set::get_rho_rho_1() const
 {
     return pimpl->M_rho_rho_1;
 }
@@ -127,7 +127,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_rho_rho_2() const
+const NSA4::element NSA4::set::get_rho_rho_2() const
 {
     return pimpl->M_rho_rho_2;
 }
@@ -140,7 +140,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_rho_rho_3() const
+const NSA4::element NSA4::set::get_rho_rho_3() const
 {
     return pimpl->M_rho_rho_3;
 }
@@ -153,7 +153,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_rho_K_4() const
+const NSA4::element NSA4::set::get_rho_K_4() const
 {
     return pimpl->M_rho_K_4;
 }
@@ -166,7 +166,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_rho_K_5() const
+const NSA4::element NSA4::set::get_rho_K_5() const
 {
     return pimpl->M_rho_K_5;
 }
@@ -179,7 +179,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_rho_K_6() const
+const NSA4::element NSA4::set::get_rho_K_6() const
 {
     return pimpl->M_rho_K_6;
 }
@@ -192,7 +192,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_K_rho_1() const
+const NSA4::element NSA4::set::get_K_rho_1() const
 {
     return pimpl->M_K_rho_1;
 }
@@ -205,7 +205,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_K_rho_2() const
+const NSA4::element NSA4::set::get_K_rho_2() const
 {
     return pimpl->M_K_rho_2;
 }
@@ -218,7 +218,7 @@ namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
 namespace NSA4 = NSA3::M;
 
-const NSA4::element& NSA4::set::get_K_rho_3() const
+const NSA4::element NSA4::set::get_K_rho_3() const
 {
     return pimpl->M_K_rho_3;
 }

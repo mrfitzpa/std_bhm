@@ -52,38 +52,16 @@ using dbl_vec = std::vector<double>;
 
 struct NSA4::builder_set::impl
 {
-    impl(const ::NSA3::soln_arrays& soln,
+    impl(::NSA3::soln_arrays& soln,
 	 const ::NSA5::params& k_eqn_params,
 	 const dbl_vec& n_array);
 
     const int window_index;
-    ::NSA3::soln_arrays soln;
+    ::NSA3::soln_arrays& soln;
     const ::NSA6::set g_set;
     const ::NSA7::set M_set;
     const ::NSA8::set simp_quad_set;
 };
-
-
-
-// The 'unnamed' namespace is introduced to make it clear to the reader
-// of this code which functions belong to this translation unit's true 
-// unnamed namespace.
-namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
-namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::block;
-
-namespace NSA5 = NSA3::k_eqn;
-
-namespace unnamed
-{
-namespace
-{
-
-int get_window_index(const ::NSA5::params& k_eqn_params);
-
-} // end of true unnamed namespace
-} // end of 'phony' unnamed namespace
 
 
 
@@ -95,7 +73,7 @@ namespace NSA4 = NSA3::block;
 
 namespace NSA5 = NSA3::k_eqn;
 
-NSA4::builder_set::builder_set(const ::NSA3::soln_arrays& soln,
+NSA4::builder_set::builder_set(::NSA3::soln_arrays& soln,
 			       const ::NSA5::params& k_eqn_params,
 			       const dbl_vec& n_array)
     : pimpl{ spimpl::make_impl<impl>(soln, k_eqn_params, n_array) }
@@ -111,41 +89,15 @@ namespace NSA4 = NSA3::block;
 
 namespace NSA5 = NSA3::k_eqn;
 
-NSA4::builder_set::impl::impl(const ::NSA3::soln_arrays& soln,
+NSA4::builder_set::impl::impl(::NSA3::soln_arrays& soln,
 			      const ::NSA5::params& k_eqn_params,
 			      const dbl_vec& n_array)
-    : window_index{ ::unnamed::get_window_index(k_eqn_params) },
+    : window_index{ ( k_eqn_params.get_step_params() ).get_window_index() },
       soln{soln},
       g_set{k_eqn_params},
       M_set{k_eqn_params, n_array},
       simp_quad_set{M_set, soln}
 {}
-
-
-
-// Get window index (m_W) from k-eqn parameters.
-namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
-namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
-namespace NSA3 = NSA2::hfb;
-namespace NSA4 = NSA3::block;
-
-namespace NSA5 = NSA3::k_eqn;
-
-namespace unnamed
-{
-namespace
-{
-
-int get_window_index(const ::NSA5::params& k_eqn_params)
-{
-    const auto& s_params = k_eqn_params.get_step_params();
-    const auto window_index = s_params.get_window_index();
-
-    return window_index;
-}
-
-} // end of true unnamed namespace
-} // end of 'phony' unnamed namespace
 
 
 
@@ -213,7 +165,7 @@ namespace NSA4 = NSA3::block;
 
 namespace NSA8 = NSA3::simp_quad;
 
-const NSA8::set& NSA4::builder_set::get_simp_quad_set() const
+const NSA8::set NSA4::builder_set::get_simp_quad_set() const
 {
     return pimpl->simp_quad_set;
 }

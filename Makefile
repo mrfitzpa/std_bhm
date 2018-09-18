@@ -1,99 +1,157 @@
-CXX := g++
+# /std_bhm/Makefile
+
+# -----------------------------------------------------------------------
+
+# This is a generic makefile that can be used to make a given list
+# of target files and automatically generate link dependencies for
+# for efficient compilations.
+#
+# This makefile is a modified version of that made by Alexander Kl"aser:
+# "https://lear.inrialpes.fr/people/klaeser/downloads
+# /genericMakefile/generic.mk".
+
+# -----------------------------------------------------------------------
+
+
+# Set some standard directories
+INCLUDE_DIR := include
 SRC_DIR := src
+TEST_DIR := test
 BUILD_DIR := build
-TARGET := bin/main
+BIN_DIR := bin
+D_DEP_DIR := .d
+L_DEP_DIR := .l
 
+# Set file extensions
 SRC_EXT := cpp
-SRCS := $(shell find $(SRC_DIR) -type f -name \*.$(SRC_EXT))
-OBJS := $(patsubst $(SRC_DIR)/%,$(BUILD_DIR)/%,$(SRCS:.$(SRC_EXT)=.o))
-OBJS := $(filter-out $(BUILD_DIR)/main.o, $(OBJS))
+OBJ_EXT := o
+D_DEP_EXT := d
+L_DEP_EXT := l
 
-DEP_DIR := .d/$(SRC_DIR)
-$(shell mkdir -p $(DEP_DIR) >/dev/null)
-DEPFLAGS = -MT $@ -MMD -MP -MF $(DEP_DIR)/$*.Td
+# Set the binaries that have to be built
+TEST_SRCS := $(shell find $(TEST_DIR) -type f -name \*.$(SRC_EXT))
+TARGETS := main $(TEST_SRCS:.$(SRC_EXT)=)
 
+# Set compiler
+CXX := g++
+
+# Library directories
+LIB_DIRS :=
+
+# Set which libraries are used by which executable
+LD_LIBS_ED_1D = $(subst /ed_1d/,-larmadillo,$(findstring /ed_1d/,$*))
+LD_LIBS_LANCZOS = $(subst /lanczos/,-larmadillo,$(findstring /lanczos/,$*))
+LD_LIBS = $(sort $(LD_LIBS_ED_1D) $(LD_LIBS_LANCZOS))
+
+# Set some flags and compiler/linker specific commands
 DEBUG := -g
 OPTIMIZE_FLAG := -O2
 OPENMP_FLAG := -fopenmp
-CXXFLAGS := -Wall $(OPENMP_FLAG) $(OPTIMIZE_FLAG) $(DEBUG) -std=gnu++11
-LIB := -larmadillo
-INC := -I include
+INC := -I $(INCLUDE_DIR)
+CXX_FLAGS := -Wall $(OPENMP_FLAG) $(OPTIMIZE_FLAG) $(DEBUG) -std=gnu++11 $(INC)
 
-COMPILE.cc = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(INC) -c
-OUTPUT_OPTION = -o $@
-POSTCOMPILE = @mv -f $(DEP_DIR)/$*.Td $(DEP_DIR)/$*.d && touch $@
+# Set the path for the dependency tool
+DEP_TOOL = ./dep_tool.py
 
-# Make main program
-$(TARGET): $(OBJS) $(BUILD_DIR)/main.o
-$(TARGET): $(OBJS) $(BUILD_DIR)/main.o
-	@echo " Linking..."
-	$(CXX) $^ -o $(TARGET) $(LIB) $(OPENMP_FLAG)
-
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT)
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.$(SRC_EXT) $(DEP_DIR)/%.d
-	@mkdir -p $(@D)
-	@mkdir -p $(DEP_DIR)$(subst $(BUILD_DIR),,$(@D))
-	$(COMPILE.cc) $(OUTPUT_OPTION) $<
-	$(POSTCOMPILE)
+# All .l include files (.l files are the link dependency files)
+INCLUDES := $(addprefix $(L_DEP_DIR)/,$(TARGETS:=.l))
 
 
-# Make test units programs
-TEST_SRC_DIR := test
-TEST_BUILD_DIR := build/test
 
-TEST_SRCS := $(shell find $(TEST_SRC_DIR) -type f -name \*.$(SRC_EXT))
-TEST_OBJS := $(patsubst $(TEST_SRC_DIR)/%,$(TEST_BUILD_DIR)/%,\
-	$(TEST_SRCS:.$(SRC_EXT)=.o))
-TEST_EXECS := $(patsubst $(TEST_SRC_DIR)/%,bin/test/%,\
-	$(TEST_SRCS:.$(SRC_EXT)=))
+#
+# Some general rules
+#
 
-TEST_DEP_DIR := .d/$(TEST_SRC_DIR)
-$(shell mkdir -p $(TEST_DEP_DIR) >/dev/null)
-TEST_DEPFLAGS = -MT $@ -MMD -MP -MF $(TEST_DEP_DIR)/$*.Td
+.PHONY: all clean
+.SECONDARY: $(D_DEP_DIR)/main.$(D_DEP_EXT) \
+	$(addprefix $(D_DEP_DIR)/,$(TEST_SRCS:.$(SRC_EXT)=.$(D_DEP_EXT)))
+#.PRECIOUS: $(D_DEP_DIR)/%.(D_DEP_EXT)
 
-TEST_COMPILE.cc = $(CXX) $(TEST_DEPFLAGS) $(CXXFLAGS) $(INC) -c
-TEST_OUTPUT_OPTION = -o $@
-TEST_POSTCOMPILE = @mv -f $(TEST_DEP_DIR)/$*.Td $(TEST_DEP_DIR)/$*.d && touch $@
+all: $(BIN_DIR) $(BUILD_DIR) $(addprefix $(BIN_DIR)/,$(TARGETS))
+	@echo "=== done ==="
 
-test: $(TEST_EXECS)
+$(INCLUDES): $(L_DEP_DIR) $(D_DEP_DIR)
 
-bin/test/%: $(TEST_BUILD_DIR)/%.o $(OBJS)
-bin/test/%: $(TEST_BUILD_DIR)/%.o $(OBJS)
-	@mkdir -p $(@D)
-	$(CXX) $^ -o $@ $(LIB) $(OPENMP_FLAG)
-
-$(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.$(SRC_EXT)
-$(TEST_BUILD_DIR)/%.o: $(TEST_SRC_DIR)/%.$(SRC_EXT) $(TEST_DEP_DIR)/%.d
-	@mkdir -p $(@D)
-	@mkdir -p $(TEST_DEP_DIR)$(subst $(TEST_BUILD_DIR),,$(@D))
-	$(TEST_COMPILE.cc) $(TEST_OUTPUT_OPTION) $<
-	$(TEST_POSTCOMPILE)
-
-
-# Create a pattern rule with an empty recipe, 
-# so that make won’t fail if the dependency file doesn’t exist.
-$(DEP_DIR)/%.d: ;
-.PRECIOUS: $(DEP_DIR)/%.d
-
-$(TEST_DEP_DIR)/%.d: ;
-.PRECIOUS: $(TEST_DEP_DIR)/%.d
-
-
-# Clean command
 clean:
-	@echo " Cleaning..."; 
-	$(RM) -r $(BUILD_DIR) $(TARGET)
-	$(RM) -r $(TEST_BUILD_DIR) bin/test
-	$(RM) -r .d
+	@echo "=== cleaning up ==="
+	@rm -rf $(BUILD_DIR)
+	@rm -rf $(BIN_DIR)
+	@rm -rf $(D_DEP_DIR)
+	@rm -rf $(L_DEP_DIR)
+
+$(BUILD_DIR) $(BIN_DIR) $(L_DEP_DIR) $(D_DEP_DIR):
+	@echo "=== Creating directory: $@ ==="
+	@mkdir -p $@
 
 
-# Do not auto-remove test object files
-.SECONDARY: $(TEST_OBJS)
 
-# Do not interprete 'clean' and 'test' as file targets
-.PHONY: clean test
+#
+# Rules for creating dependency files
+#
+
+# Generate .d dependency files, which list the dependencies of .cpp files
+# on other files
+$(D_DEP_DIR)/%.$(D_DEP_EXT): $(SRC_DIR)/%.$(SRC_EXT)
+	@echo "=== Creating .d dependency file: $@ ==="
+	@test -e $(dir $@) || mkdir -p $(dir $@)
+	$(CXX) $(CXX_FLAGS) -MM -MT $(BUILD_DIR)/$*.$(OBJ_EXT) \
+	-MT $@ -MF $@ $<
+
+$(D_DEP_DIR)/$(TEST_DIR)/%.$(D_DEP_EXT): $(TEST_DIR)/%.$(SRC_EXT)
+	@echo "=== Creating .d dependency file: $@ ==="
+	@test -e $(dir $@) || mkdir -p $(dir $@)
+	$(CXX) $(CXX_FLAGS) -MM -MT $(BUILD_DIR)/$(TEST_DIR)/$*.$(OBJ_EXT) \
+	-MT $@ -MF $@ $<
 
 
-# Include dependency files in this makefile
-include $(wildcard $(patsubst $(SRC_DIR)/%,$(DEP_DIR)/%.d,$(basename $(SRCS))))
-include $(wildcard $(patsubst $(TEST_SRC_DIR)/%,$(TEST_DEP_DIR)/%.d,$(basename $(TEST_SRCS))))
+
+# Generate .l dependency files, which list the link dependencies of the target
+# file in question
+$(L_DEP_DIR)/%.$(L_DEP_EXT): $(D_DEP_DIR)/%.$(D_DEP_EXT)
+	@echo "=== Creating .l dependency file: $@ ==="
+	@test -e $(dir $@) || mkdir -p $(dir $@)
+	$(DEP_TOOL) $(BIN_DIR)/$* $@ $(D_DEP_DIR) $(BUILD_DIR) $(SRC_DIR) \
+	$(INCLUDE_DIR) $< > $@
+
+
+
+#
+# Rules for compiling and linking
+#
+
+# Compiling
+$(BUILD_DIR)/%.$(OBJ_EXT): $(SRC_DIR)/%.$(SRC_EXT)
+	@echo "=== Compiling: $@ ==="
+	@test -e $(dir $@) || mkdir -p $(dir $@)
+	$(CXX) $(CXX_FLAGS) -c -o $@ $<
+
+$(BUILD_DIR)/$(TEST_DIR)/%.$(OBJ_EXT): $(TEST_DIR)/%.$(SRC_EXT)
+	@echo "=== Compiling: $@ ==="
+	@test -e $(dir $@) || mkdir -p $(dir $@)
+	$(CXX) $(CXX_FLAGS) -c -o $@ $<
+
+
+
+# Linking: link dependencies are defined in the .l files
+$(BIN_DIR)/%:
+	@echo "=== Linking: $@ ==="
+	@test -e $(dir $@) || mkdir -p $(dir $@)
+	@rm -f $@
+	$(CXX) $(LD_FLAGS) -o $@ $(filter %.o, $^) $(LD_LIBS) $(OPENMP_FLAG)
+
+# Some empty recipes
+%: %.o
+%.h: ;
+%.hpp: ;
+%.c: ;
+%.cpp: ;
+
+
+
+#
+# Include dependency files
+#
+
+ifneq ($(MAKECMDGOALS),clean)
+-include $(INCLUDES)
+endif

@@ -64,10 +64,10 @@ struct NSA5::rho_1::impl
 
     const ::NSA6::element& g_rho;
     
-    const ::NSA7::element& M_rho_rho_1;
-    const ::NSA7::element& M_rho_rho_2;
+    const ::NSA7::element M_rho_rho_1;
+    const ::NSA7::element M_rho_rho_2;
     
-    const ::NSA8::element& simp_quad_rho_rho;
+    const ::NSA8::element simp_quad_rho_rho;
 
     const cmplx_vec& y_rho;
 
@@ -130,7 +130,7 @@ cmplx_vec NSA5::rho_1::do_eval(int m1, int m2) const
 
 
 
-// Evaluate second component of the b-vector.
+// Evaluate first component of the b-vector.
 namespace NSA1 = std_bhm::bhm_2hs_2pi::konstantinov_and_perel::hopping_quench;
 namespace NSA2 = NSA1::finite_temperature::start_in_atomic_lim::block_by_block;
 namespace NSA3 = NSA2::hfb;
@@ -141,12 +141,20 @@ using cmplx_dbl = std::complex<double>;
 
 cmplx_dbl NSA5::rho_1::impl::eval_first_component(int m1, int m2) const
 {
-    return (g_rho.eval(2*m1, 2*m2)
-	    + simp_quad_rho_rho.eval(0, m1-1, 2*m1, 2*m2)
-	    + (1.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-2)
-			      * y_rho[2*m1-2] )
-	    + (4.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-1)
-			      * y_rho[2*m1-1] ) );
+    auto result = cmplx_dbl{};
+
+    result = ( g_rho.eval(2*m1, 2*m2)
+	       + simp_quad_rho_rho.eval(0, m1-1, 2*m1, 2*m2) );
+
+    if (m1 != 0)
+    {
+	result += ( (1.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-2)
+				    * y_rho[2*m1-2] )
+		    + (4.0 / 3.0) * ( M_rho_rho_1.eval(2*m1, 2*m2, 2*m1-1)
+				      * y_rho[2*m1-1] ) );
+    }
+    
+    return result;
 }
 
 
@@ -162,12 +170,20 @@ using cmplx_dbl = std::complex<double>;
 
 cmplx_dbl NSA5::rho_1::impl::eval_second_component(int m1, int m2) const
 {
-    return (g_rho.eval(2*m1+1, 2*m2)
-	    + simp_quad_rho_rho.eval(0, m1-1, 2*m1+1, 2*m2)
-	    + (1.0 / 3.0) * ( M_rho_rho_1.eval(2*m1+1, 2*m2, 2*m1-2)
-			      * y_rho[2*m1-2] )
-	    + (4.0 / 3.0) * ( M_rho_rho_1.eval(2*m1+1, 2*m2, 2*m1-1)
-			      * y_rho[2*m1-1] )
-	    - (1.0 / 12.0) * ( M_rho_rho_2.eval(2*m1+1, 2*m2, 2*m1)
-			      * y_rho[2*m1-1] ) );
+    auto result = cmplx_dbl{};
+
+    result = ( g_rho.eval(2*m1+1, 2*m2)
+	       + simp_quad_rho_rho.eval(0, m1-1, 2*m1+1, 2*m2)
+	       - (1.0 / 12.0) * ( M_rho_rho_2.eval(2*m1+1, 2*m2, 2*m1)
+				  * y_rho[2*m1-1] ) );
+
+    if (m1 != 0)
+    {
+	result += ( (1.0 / 3.0) * ( M_rho_rho_1.eval(2*m1+1, 2*m2, 2*m1-2)
+				    * y_rho[2*m1-2] )
+		    + (4.0 / 3.0) * ( M_rho_rho_1.eval(2*m1+1, 2*m2, 2*m1-1)
+				      * y_rho[2*m1-1] ) );
+    }
+    
+    return result;
 }
