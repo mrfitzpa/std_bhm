@@ -21,8 +21,3 @@ test_check/
 
 # ignore all files in the .l/ directory
 .l/
-
-# ignore all .py, .pyc, and .ipynb files
-#*.py
-#*.ipynb
-#*.pyc
