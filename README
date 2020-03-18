@@ -1,0 +1,21 @@
+Prerequisites for this package:
+    -the armadillo library for linear algebra and scientific computing
+        --link: http://arma.sourceforge.net/download.html
+	--Follow the installation instruction in the package
+	--Make sure to install SuperLU 5.2
+
+To compile source files, in the main directory "std_bhm/", type:
+
+make clean
+make
+
+To run a light-cone simulation, in the main directory, type:
+
+./scripts/test/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/start_in_atomic_lim/block_by_block/hfb/sim/run_alg_1.sh
+
+Once the simulation has finished you will find the corresponding data in:
+
+/std_bhm/data/test/bhm_2hs_2pi/konstantinov_and_perel/hopping_quench/finite_temperature/start_in_atomic_lim/block_by_block/hfb/sim/
+
+You can edit the parameters for the simulation by editing the script file.
+     

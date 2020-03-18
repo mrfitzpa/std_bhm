@@ -65,7 +65,6 @@ INCLUDES := $(addprefix $(L_DEP_DIR)/,$(TARGETS:=.l))
 .PHONY: all clean
 .SECONDARY: $(D_DEP_DIR)/main.$(D_DEP_EXT) \
 	$(addprefix $(D_DEP_DIR)/,$(TEST_SRCS:.$(SRC_EXT)=.$(D_DEP_EXT)))
-#.PRECIOUS: $(D_DEP_DIR)/%.(D_DEP_EXT)
 
 all: $(BIN_DIR) $(BUILD_DIR) $(addprefix $(BIN_DIR)/,$(TARGETS))
 	@echo "=== done ==="

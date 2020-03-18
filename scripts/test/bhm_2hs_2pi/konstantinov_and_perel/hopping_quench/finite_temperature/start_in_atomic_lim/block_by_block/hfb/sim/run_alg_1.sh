@@ -9,25 +9,26 @@
 #---------------------------------------------------------------------------
 
 # Set number of threads to run in parallel
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=1
 
 # Set fixed parameters
 beta="1000"
 mu="0.4116"
-max_band_index="100"
+max_band_index="100" # this can probably be left untouched
 
-L="8"
-d="1"
+L="3"
+d="2"
 
 jf="0.035"
 tc="5"
 tau_Q="0.1"
 
-n_block_steps="2000"
+n_block_steps="250"
 ds="0.05"
-window_index="2000"
+window_index=$n_block_steps # this can probably be left untouched
 
-tol="1.0e-12"
+#tol="1.0e-12"# this can probably be left untouched
+tol="0.000000000001"
 
 # Get absolute path of executable/program. This is done by first getting
 # the absolute path of this script and then modifying it accordingly.

@@ -9,19 +9,19 @@
 #---------------------------------------------------------------------------
 
 # Set number of threads to run in parallel
-export OMP_NUM_THREADS=4
+export OMP_NUM_THREADS=1
 
 # Set fixed parameters
 beta="1000"
-mu="0.4136"
+mu="0.4116"
 max_band_index="100"
-L="6"
-d="1"
+L="4"
+d="2"
 ji="0.00"
-jf="0.05"
+jf="0.035"
 tc="5"
 tau_Q="0.1"
-n_block_steps="2200"
+n_block_steps="250"
 ds="0.05"
 tol="1.0e-12"
 
